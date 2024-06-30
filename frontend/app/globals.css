@@ -1,0 +1,8 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.horizontal-center {
+  margin: 0 auto;
+}
+
