@@ -1,0 +1,12 @@
+### Create new user
+POST http://localhost:8080/account/register
+Content-Type: application/json
+
+{
+  "email": "mahmudula2002@gmail.com",
+  "password": "1234"
+}
+###
+###
+#GET http://localhost:8080/
+###
