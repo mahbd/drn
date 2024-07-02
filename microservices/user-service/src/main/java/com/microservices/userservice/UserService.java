@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -69,5 +70,10 @@ public class UserService {
             return null;
         }
         return new UserResponse(user.getId(), user.getEmail(), user.getRole());
+    }
+
+    public List <User> userList(){
+        List<User> users = userRepository.findAll();
+        return users;
     }
 }
