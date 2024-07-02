@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.Instant;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -92,5 +93,11 @@ public class Controller {
             var body = Map.of("message", "Invalid token");
             return ResponseEntity.ok().body(body);
         }
+    }
+
+    @GetMapping("/user-list")
+    public ResponseEntity<List<User>> userList(){
+        List<User> users = userService.userList();
+        return ResponseEntity.ok(users);
     }
 }
