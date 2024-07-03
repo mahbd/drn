@@ -95,9 +95,9 @@ public class Controller {
         }
     }
 
-    @GetMapping("/user-list")
-    public ResponseEntity<List<User>> userList(){
-        List<User> users = userService.userList();
+    @GetMapping
+    public ResponseEntity<List<UserResponse>> userList(){
+        List<UserResponse> users = userService.userList();
         return ResponseEntity.ok(users);
     }
 }
