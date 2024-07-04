@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">DRN App</string>
+    <string name="login">Login</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="transmitting_location_data">You are currently logged into the app. Your location data is being transmitted to DRN. To ensure uninterrupted data transmission, please keep the app running in the background and ensure your device\'s location services remain enabled.</string>
 </resources>

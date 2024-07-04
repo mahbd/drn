@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">DRN App</string>
+    <string name="login">লগইন</string>
+    <string name="email">ইমেল</string>
+    <string name="password">পাসওয়ার্ড</string>
+    <string name="transmitting_location_data">আপনি বর্তমানে অ্যাপটিতে লগ ইন করেছেন। আপনার অবস্থানের তথ্য ডিআরএন-এ প্রেরণ করা হচ্ছে। নিরবিচ্ছিন্ন ডেটা ট্রান্সমিশন নিশ্চিত করতে, দয়া করে অ্যাপটিকে ব্যাকগ্রাউন্ডে চালু রাখুন এবং আপনার ডিভাইসের অবস্থান পরিষেবা সক্রিয় রয়েছে তা নিশ্চিত করুন।</string>
 </resources>
