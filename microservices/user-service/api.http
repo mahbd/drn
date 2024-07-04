@@ -1,5 +1,5 @@
 ### Create new user
-POST http://localhost:8080/account/register
+POST http://localhost:8081/api/users/register
 Content-Type: application/json
 
 {
@@ -8,5 +8,25 @@ Content-Type: application/json
 }
 ###
 ###
-#GET http://localhost:8080/
+GET http://localhost:8081/
 ###
+
+POST http://localhost:8081/api/users/login
+Content-Type: application/json
+
+{
+  "email": "mahmudula2002@gmail.com",
+  "password": "1234"
+}
+
+###
+
+POST http://localhost:8081/api/users/verify
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJkcm4iLCJpZCI6MSwiZW1haWwiOiJtYWhtdWR1bGEyMDAyQGdtYWlsLmNvbSIsInJvbGUiOiJjaXRpemVuIiwiaWF0IjoxNzIwMDcwMzExLCJleHAiOjE3MjAxNTY3MTF9.l-aXE8ieHq0O7FzKlj6FU6N7FJ_0v5k525hKTE9Ovws
+Content-Type: application/json
+
+###
+
+GET http://localhost:8081/api/users
+Content-Type: application/json
+
