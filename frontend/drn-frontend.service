@@ -1,0 +1,12 @@
+[Unit]
+Description=Start nextjs drn-frontend server
+After=network.target
+
+[Service]
+User=#USER#
+WorkingDirectory=#DIR#
+Environment=NODE_ENV=production
+ExecStart=#NPM_PATH# start
+
+[Install]
+WantedBy=multi-user.target
