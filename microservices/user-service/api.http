@@ -6,11 +6,14 @@ Content-Type: application/json
   "email": "mahmudula2002@gmail.com",
   "password": "1234"
 }
-###
-###
-GET http://localhost:8081/
-###
 
+> {%
+    client.test("Registration", function () {
+        client.assert(response.status === 201, "Response status is not 201");
+    });
+%}
+
+### Login user
 POST http://localhost:8081/api/users/login
 Content-Type: application/json
 
@@ -19,14 +22,49 @@ Content-Type: application/json
   "password": "1234"
 }
 
+> {%
+    client.test("Login", function () {
+        client.assert(response.status === 200, "Response status is not 200");
+    });
+%}
+
+###
+
+### Login user wrong password
+POST http://localhost:8081/api/users/login
+Content-Type: application/json
+
+{
+  "email": "mahmudula2002@gmail.com",
+  "password": "12345"
+}
+
+> {%
+    client.test("Login Wrong Password", function () {
+        client.assert(response.status === 401, "Response status is not 401");
+    });
+%}
+
 ###
 
 POST http://localhost:8081/api/users/verify
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJkcm4iLCJpZCI6MSwiZW1haWwiOiJtYWhtdWR1bGEyMDAyQGdtYWlsLmNvbSIsInJvbGUiOiJjaXRpemVuIiwiaWF0IjoxNzIwMDcwMzExLCJleHAiOjE3MjAxNTY3MTF9.l-aXE8ieHq0O7FzKlj6FU6N7FJ_0v5k525hKTE9Ovws
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJkcm4iLCJpZCI6NTIsImVtYWlsIjoibWFobXVkdWxhMjAwMkBnbWFpbC5jb20iLCJyb2xlIjoiY2l0aXplbiIsImlhdCI6MTcyMDE3MTI2MCwiZXhwIjoxNzIwMjU3NjYwfQ.psg1l7u-uxDNdRSY1-OM_skekJFTjsBDigYwgNQnL2g
 Content-Type: application/json
+
+> {%
+    client.test("Verify Login", function () {
+        client.assert(response.status === 200, "Response status is not 200");
+    });
+%}
 
 ###
 
 GET http://localhost:8081/api/users
 Content-Type: application/json
+
+> {%
+    client.test("Get Users", function () {
+        client.assert(response.status === 200, "Response status is not 200");
+    });
+%}
 
