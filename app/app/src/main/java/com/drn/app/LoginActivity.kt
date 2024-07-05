@@ -31,7 +31,7 @@ class LoginActivity : AppCompatActivity() {
                 .baseUrl("https://lp8081.mahmudul.com.bd")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
-            val service = retrofit.create(LoginService::class.java)
+            val service = retrofit.create(APIService::class.java)
             service.login(LoginRequest(email, password)).enqueue(object : Callback<LoginResponse> {
                 override fun onResponse(
                     call: Call<LoginResponse>,
