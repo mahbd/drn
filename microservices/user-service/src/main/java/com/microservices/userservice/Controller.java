@@ -9,9 +9,8 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import com.microservices.userservice.dto.LoginBody;
 import com.microservices.userservice.dto.RegisterBody;
 import com.microservices.userservice.dto.UserResponse;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,7 +22,6 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/users")
 public class Controller {
-    private static final Logger log = LoggerFactory.getLogger(Controller.class);
     @Value("${security.jwt.secret-key}")
     private String jwtSecretKey;
 
@@ -34,12 +32,12 @@ public class Controller {
     }
 
     @PostMapping("/register")
-    public String register(@RequestBody RegisterBody registerBody) {
+    public ResponseEntity<Object> register(@RequestBody RegisterBody registerBody) {
         User user = userService.registerUser(registerBody);
         if (user == null) {
-            return "User already exists";
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("message", "User already exists"));
         }
-        return createJwtToken(user);
+        return ResponseEntity.status(HttpStatus.CREATED).body(Map.of("token", createJwtToken(user)));
     }
 
     private String createJwtToken(User user) {
@@ -61,12 +59,12 @@ public class Controller {
     }
 
     @PostMapping("/login")
-    public String login(@RequestBody LoginBody loginBody) {
+    public ResponseEntity<Object> login(@RequestBody LoginBody loginBody) {
         User user = userService.loginUser(loginBody);
         if (user == null) {
-            return "User does not exist";
+            return new ResponseEntity<>(Map.of("message", "Invalid credentials"), HttpStatus.UNAUTHORIZED);
         }
-        return createJwtToken(user);
+        return ResponseEntity.ok(Map.of("token", createJwtToken(user)));
     }
 
     @PostMapping("/verify")
