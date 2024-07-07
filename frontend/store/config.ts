@@ -1,6 +1,7 @@
 const endpoint = "http://localhost:8081";
 
 export const API = {
+  register: endpoint + "/api/users/register",
   login: endpoint + "/api/users/login",
   verifyToken: endpoint + "/api/users/verify",
   refreshToken: endpoint + "/api/users/refresh",
