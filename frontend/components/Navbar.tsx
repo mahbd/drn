@@ -20,8 +20,7 @@ const Navbar = () => {
   const pathname = usePathname();
 
   return (
-    <div className={"mx-10"}>
-      {/* Desktop Navigation */}
+    <div>
       <nav className="sm:flex hidden navbar px-5 py-0 min-h-10 rounded-2xl bg-base-100">
         <div className="navbar-start">
           <Link href={"/"} className="btn btn-ghost btn-sm text-lg font-medium">
@@ -37,8 +36,6 @@ const Navbar = () => {
           <AuthStatus />
         </div>
       </nav>
-
-      {/* Mobile Navigation */}
       <div className="navbar bg-base-200 sm:hidden flex min-h-4 py-1">
         <div className="navbar-start">
           <div className="dropdown">

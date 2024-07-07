@@ -2,7 +2,7 @@ import Feature from "@/components/Feature";
 
 const Features = () => {
   return (
-    <div className={"grid grid-cols-3"}>
+    <div className={"grid grid-cols-1 md:grid-cols-3 gap-1"}>
       <Feature
         image={"/images/donate.jpeg"}
         title={"Donation"}

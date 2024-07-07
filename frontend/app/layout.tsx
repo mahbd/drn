@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Navbar } from "@/components";
 import { ReactNode } from "react";
+import Footer from "@/components/Footer";
+import { IoChatbubbleEllipsesOutline } from "react-icons/io5";
 
 export const metadata: Metadata = {
   title: "DRN | Home",
@@ -22,13 +24,24 @@ export default function RootLayout({
             backgroundImage: "url(/images/background.jpg)",
             backgroundSize: "cover",
             backgroundAttachment: "fixed",
-            opacity: 0.25,
+            opacity: 0.2,
           }}
         ></div>
         <Navbar />
         <div className="horizontal-center lg:max-w-4xl w-full mx-5 md:mx-10 lg:mx-auto p-2">
           {children}
         </div>
+        <button className="fixed bottom-5 md:bottom-32 right-5 z-50 text-white shadow-lg focus:outline-none focus:shadow-outline transform hover:scale-110">
+          <div
+            className={
+              "py-2 px-4 rounded-2xl text-5xl text-primary flex justify-center"
+            }
+          >
+            <IoChatbubbleEllipsesOutline />
+          </div>
+          <p className={"bg-primary py-2 px-4 rounded-2xl"}>Chat with DiRi</p>
+        </button>
+        <Footer />
       </body>
     </html>
   );
