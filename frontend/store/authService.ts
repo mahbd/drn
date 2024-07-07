@@ -37,20 +37,23 @@ export const loginWithPassword = async (
   password: string,
   redirectURI?: string,
 ) => {
-  httpService
-    .post(`${API.login}`, { username: email, password })
-    .then((response) => {
-      setJwt(response.data.access);
-      setRefreshToken(response.data.refresh);
-      if (redirectURI) {
-        redirect(redirectURI);
-      } else {
-        window.location.reload();
-      }
-    })
-    .catch((error) => {
-      alert(error.response.data.errors);
+  try {
+    const response = await httpService.post(`${API.login}`, {
+      email,
+      password,
     });
+    if (response.status !== 200)
+      return { status: false, message: response.data };
+    setJwt(response.data.token);
+    if (redirectURI) {
+      window.location.href = redirectURI;
+    } else {
+      window.location.reload();
+    }
+  } catch (error: any) {
+    console.log(error);
+    return { status: false, message: error };
+  }
 };
 
 export function getCurrentUser() {
@@ -68,17 +71,5 @@ export function getRefreshToken() {
 }
 
 export const refreshAccessToken = () => {
-  httpService
-    .post(`${API.refreshToken}`, {
-      refresh: getRefreshToken(),
-    })
-    .then((response) => {
-      localStorage.setItem("access", response.data.access);
-      window.location.reload();
-    })
-    .catch((error) => {
-      if (error.response && error.response.status === 401) {
-        logout(ROUTING.login);
-      }
-    });
+  window.location.href = ROUTING.login;
 };

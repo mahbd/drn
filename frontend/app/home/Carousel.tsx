@@ -13,6 +13,7 @@ const Carousel = ({ className }: { className: string }) => {
       autoPlay={true}
       swipeable={true}
       infiniteLoop={true}
+      showThumbs={false}
     >
       <div>
         <Hero

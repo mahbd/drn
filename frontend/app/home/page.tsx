@@ -43,9 +43,7 @@ const HomePage = async () => {
         </button>
       </div>
       <h2 className={"section-title"}>Public Cheers for Us!</h2>
-      <p className={"mb-10"}>
-        <TestimonialCards />
-      </p>
+      <TestimonialCards />
     </div>
   );
 };

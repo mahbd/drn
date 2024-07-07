@@ -1,9 +1,9 @@
-const endpoint = "http://localhost:3000";
+const endpoint = "http://localhost:8081";
 
 export const API = {
-  login: endpoint + "/api/auth/login",
-  verifyToken: endpoint + "/api/auth/verify",
-  refreshToken: endpoint + "/api/auth/refresh",
+  login: endpoint + "/api/users/login",
+  verifyToken: endpoint + "/api/users/verify",
+  refreshToken: endpoint + "/api/users/refresh",
 };
 
 export const ROUTING = {
@@ -12,4 +12,6 @@ export const ROUTING = {
   aboutUs: "/misc/about-us",
   profile: "/users/profile",
   login: "/users/login",
+  register: "/users/register",
+  forgotPassword: "/users/forgot-password",
 };

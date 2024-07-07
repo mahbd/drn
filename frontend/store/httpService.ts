@@ -7,7 +7,6 @@ if (getJwt()) {
 
 axios.interceptors.response.use(
   (res) => {
-    // Todo: Start loading animation when called
     return res;
   },
   (error) => {
@@ -18,7 +17,6 @@ axios.interceptors.response.use(
 
     if (getJwt() && error.response && error.response.status === 401) {
       refreshAccessToken();
-      // ToDo: Retry the request
       return Promise.reject(error);
     }
 
@@ -26,13 +24,11 @@ axios.interceptors.response.use(
       console.log("Logging the error", error);
       alert("An unexpected error.");
     }
-    // Todo: Stop loading animation when called
     return Promise.reject(error);
   },
 );
 
 axios.interceptors.request.use((config) => {
-  // Todo: Stop loading animation when called
   return config;
 });
 

@@ -2,8 +2,10 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { getCurrentUser, logout } from "@/store/authService";
 import { ROUTING } from "@/store/config";
+import dynamic from "next/dynamic";
+
+const AuthStatus = dynamic(() => import("./AuthStatus"), { ssr: false });
 
 export const navLinks = [
   {
@@ -90,54 +92,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
-
-const AuthStatus = () => {
-  const user = getCurrentUser();
-
-  if (!user)
-    return (
-      <Link href={ROUTING.login} className="nav-link">
-        Login
-      </Link>
-    );
-
-  return (
-    <div className="dropdown dropdown-end max-h-4">
-      <div
-        tabIndex={0}
-        role="button"
-        className="btn btn-ghost btn-sm btn-circle avatar -m-2"
-      >
-        <div className="w-10 rounded-full">
-          <div className="w-10 h-10 bg-green-600">
-            <p className="pt-1 text-lg font-bold uppercase">{user.email![0]}</p>
-          </div>
-        </div>
-      </div>
-      <ul
-        tabIndex={0}
-        className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
-      >
-        <li>
-          <Link href={ROUTING.profile} className="justify-between">
-            Profile
-            <span className="badge">New</span>
-          </Link>
-        </li>
-        {user.role === "admin" && (
-          <li>
-            <Link href={ROUTING.admin} className="justify-between">
-              Admin Panel
-              <span className="badge">New</span>
-            </Link>
-          </li>
-        )}
-        <li>
-          <button onClick={() => logout()} className={"btn btn-xs btn-error"}>
-            Sign Out
-          </button>
-        </li>
-      </ul>
-    </div>
-  );
-};

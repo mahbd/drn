@@ -27,21 +27,27 @@ export default function RootLayout({
             opacity: 0.2,
           }}
         ></div>
-        <Navbar />
-        <div className="horizontal-center lg:max-w-4xl w-full mx-5 md:mx-10 lg:mx-auto p-2">
-          {children}
+        <div className={"flex flex-col min-h-screen"}>
+          <main className={"flex-grow lg:mx-10"}>
+            <Navbar />
+            <div className="horizontal-center lg:max-w-4xl w-full mx-5 md:mx-10 lg:mx-auto p-2">
+              {children}
+            </div>
+            <button className="fixed bottom-5 md:bottom-32 right-5 z-50 text-white shadow-lg focus:outline-none focus:shadow-outline transform hover:scale-110">
+              <div
+                className={
+                  "py-2 px-4 rounded-2xl text-5xl text-primary flex justify-center"
+                }
+              >
+                <IoChatbubbleEllipsesOutline />
+              </div>
+              <p className={"bg-primary py-2 px-4 rounded-2xl"}>
+                Chat with DiRi
+              </p>
+            </button>
+          </main>
+          <Footer />
         </div>
-        <button className="fixed bottom-5 md:bottom-32 right-5 z-50 text-white shadow-lg focus:outline-none focus:shadow-outline transform hover:scale-110">
-          <div
-            className={
-              "py-2 px-4 rounded-2xl text-5xl text-primary flex justify-center"
-            }
-          >
-            <IoChatbubbleEllipsesOutline />
-          </div>
-          <p className={"bg-primary py-2 px-4 rounded-2xl"}>Chat with DiRi</p>
-        </button>
-        <Footer />
       </body>
     </html>
   );
