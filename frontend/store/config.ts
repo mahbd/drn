@@ -10,7 +10,12 @@ export const API = {
 export const ROUTING = {
   home: "/home",
   admin: "/admin",
-  aboutUs: "/misc/about-us",
+  ourMission: "/misc/our-mission",
+  ourVision: "/misc/our-vision",
+  privacyPolicy: "/misc/privacy-policy",
+  termsAndConditions: "/misc/terms-and-conditions",
+  partnersAndSponsors: "/misc/partners-and-sponsors",
+  ourTeam: "/misc/our-team",
   profile: "/users/profile",
   login: "/users/login",
   register: "/users/register",

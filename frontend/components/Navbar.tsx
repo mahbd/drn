@@ -5,7 +5,16 @@ import { usePathname } from "next/navigation";
 import { ROUTING } from "@/store/config";
 import dynamic from "next/dynamic";
 
-const AuthStatus = dynamic(() => import("./AuthStatus"), { ssr: false });
+const AuthStatus = dynamic(() => import("./AuthStatus"), {
+  ssr: false,
+  loading: () => <div className="skeleton h-8 w-12"></div>,
+});
+
+interface NavLink {
+  id: string;
+  title: string;
+  children?: NavLink[];
+}
 
 export const navLinks = [
   {
@@ -13,8 +22,34 @@ export const navLinks = [
     title: "Home",
   },
   {
-    id: ROUTING.aboutUs,
+    id: ROUTING.ourMission + "0",
     title: "About Us",
+    children: [
+      {
+        id: ROUTING.partnersAndSponsors,
+        title: "Partners and Sponsors",
+      },
+      {
+        id: ROUTING.ourTeam,
+        title: "Our Team",
+      },
+      {
+        id: ROUTING.ourMission,
+        title: "Our Mission",
+      },
+      {
+        id: ROUTING.ourVision,
+        title: "Our Vision",
+      },
+      {
+        id: ROUTING.privacyPolicy,
+        title: "Privacy Policy",
+      },
+      {
+        id: ROUTING.termsAndConditions,
+        title: "Terms and Conditions",
+      },
+    ],
   },
 ];
 
@@ -28,17 +63,13 @@ const Navbar = () => {
           <Link href={"/"} className="btn btn-ghost btn-sm text-lg font-medium">
             DRN
           </Link>
-          {navLinks.map((nav) => (
-            <span key={nav.id} className="mx-1">
-              <a href={`${nav.id}`}>{nav.title}</a>
-            </span>
-          ))}
+          <DesktopLink navs={navLinks} />
         </div>
         <div className="navbar-end">
           <AuthStatus />
         </div>
       </nav>
-      <div className="navbar bg-base-200 sm:hidden flex min-h-4 py-1">
+      <div className="navbar bg-base-200 sm:hidden flex min-h-4 py-1 z-auto">
         <div className="navbar-start">
           <div className="dropdown">
             <div
@@ -63,18 +94,9 @@ const Navbar = () => {
             </div>
             <ul
               tabIndex={0}
-              className="menu menu-sm dropdown-content mt-3 z-[1] shadow bg-base-100 rounded-box w-52"
+              className="menu menu-sm dropdown-content mt-3 z-[10] shadow bg-base-100 rounded-box w-60"
             >
-              {navLinks.map((nav, index) => (
-                <li
-                  key={nav.id}
-                  className={`font-poppins cursor-pointer text-[16px] ${
-                    pathname.search(nav.id) === 0 ? "font-bold" : ""
-                  } ${index === navLinks.length - 1 ? "mb-0" : "mb-4"}`}
-                >
-                  <a href={`${nav.id}`}>{nav.title}</a>
-                </li>
-              ))}
+              <MobileLink navs={navLinks} />
             </ul>
           </div>
         </div>
@@ -92,3 +114,71 @@ const Navbar = () => {
 };
 
 export default Navbar;
+
+const DesktopLink = ({ navs }: { navs: NavLink[] }) => {
+  return (
+    <div>
+      {navs.map((nav) => {
+        if (nav.children) {
+          return (
+            <div
+              key={nav.id}
+              className="dropdown dropdown-bottom dropdown-hover cursor-pointer"
+            >
+              <div tabIndex={0}>{nav.title}</div>
+              <ul className="menu dropdown-content bg-base-100 rounded-box z-[10]">
+                {nav.children.map((child) => (
+                  <li key={child.id}>
+                    <a href={child.id} className={"whitespace-nowrap"}>
+                      {child.title}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          );
+        }
+        return (
+          <span key={nav.id} className="mx-1">
+            <a href={`${nav.id}`}>{nav.title}</a>
+          </span>
+        );
+      })}
+    </div>
+  );
+};
+
+const MobileLink = ({ navs }: { navs: NavLink[] }) => {
+  const pathname = usePathname();
+  return (
+    <div>
+      {navs.map((nav, index) => {
+        if (nav.children) {
+          return (
+            <div key={nav.id} className="collapse collapse-arrow">
+              <input type="checkbox" className="peer" />
+              <li className="collapse-title cursor-pointer -ms-1">
+                {nav.title}
+              </li>
+              <div className="collapse-content">
+                <ul className={"-mt-5"}>
+                  <MobileLink navs={nav.children} />
+                </ul>
+              </div>
+            </div>
+          );
+        }
+        return (
+          <li
+            key={nav.id}
+            className={`cursor-pointer ${
+              pathname.search(nav.id) === 0 ? "font-bold" : ""
+            }`}
+          >
+            <a href={`${nav.id}`}>{nav.title}</a>
+          </li>
+        );
+      })}
+    </div>
+  );
+};
