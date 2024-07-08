@@ -20,7 +20,7 @@ public class UserService {
     private final UserRepository userRepository;
 
     private String hashPassword(String stringToHash) {
-        MessageDigest messageDigest = null;
+        MessageDigest messageDigest;
         try {
             messageDigest = MessageDigest.getInstance("SHA-256");
         } catch (NoSuchAlgorithmException e) {
@@ -36,6 +36,10 @@ public class UserService {
         user.setEmail(registerBody.email());
         user.setRole("citizen");
         user.setPassword(hashPassword(registerBody.password()));
+
+        user.setName(registerBody.name());
+        user.setPhone(registerBody.phone());
+        user.setAddress(registerBody.address());
 
         try {
             User otherUser = userRepository.findByEmail(registerBody.email());
@@ -74,9 +78,8 @@ public class UserService {
     }
 
     public List <UserResponse> userList(){
-        List<UserResponse> list = userRepository.findAll().stream()
+        return userRepository.findAll().stream()
                 .map(user -> new UserResponse(user.getId(), user.getEmail(), user.getRole()))
                 .collect(Collectors.toList());
-        return list;
     }
 }

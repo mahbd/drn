@@ -1,20 +1,18 @@
 package com.microservices.alertservice;
 
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.microservices.alertservice.dto.AlertRequest;
+import com.microservices.alertservice.dto.AlertResponse;
 import com.microservices.alertservice.dto.UserResponse;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -55,5 +53,55 @@ public class AlertController {
 
         return ResponseEntity.status(HttpStatus.CREATED).body(alertService.createAlert(alertRequest));
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Object> updateAlert(@PathVariable Long id, @RequestBody Alert alert, @RequestHeader("Authorization") String authorizationHeader) {
+
+
+        String role = getRole(authorizationHeader);
+        if (role == null) {
+            var response = Map.of("message", "Failed to authenticate admin");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
+        }
+        if (!role.equals("admin")) {
+            var response = Map.of("message", "You are not authorized to perform this action");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
+        }
+
+
+        Alert updatedAlert = alertService.updateAlert(id, alert);
+
+        if (updatedAlert != null) {
+            return ResponseEntity.ok(updatedAlert);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @GetMapping
+    public ResponseEntity<List<AlertResponse>> getAllAlerts() {
+
+        List<AlertResponse> allAlerts = alertService.getAllAlerts();
+        return ResponseEntity.ok(allAlerts);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Object> deleteAlert(@PathVariable Long id, @RequestHeader("Authorization") String authorizationHeader) {
+
+        String role = getRole(authorizationHeader);
+        if (role == null) {
+            var response = Map.of("message", "Failed to authenticate admin");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
+        }
+        if (!role.equals("admin")) {
+            var response = Map.of("message", "You are not authorized to perform this action");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
+        }
+
+        alertService.deleteAlert(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    
 
 }
