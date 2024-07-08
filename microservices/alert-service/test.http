@@ -1,0 +1,86 @@
+### Create new alert
+POST http://localhost:8082/api/alerts
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "type": "cyclone",
+  "location": "rajshahi",
+  "severity": "high",
+  "description": "to much rain",
+  "isActive": true
+}
+
+> {%
+    client.test("Create Alert!", function () {
+        client.assert(response.status === 201, "Response status is not 201");
+    });
+%}
+
+### Create new alert without authorization
+POST http://localhost:8082/api/alerts
+Content-Type: application/json
+
+{
+  "type": "cyclone",
+  "location": "rajshahi",
+  "severity": "high",
+  "description": "to much rain",
+  "isActive": true
+}
+
+> {%
+    client.test("Create Alert!", function () {
+        client.assert(response.status === 401, "Response status is not 401");
+    });
+%}
+
+###
+
+GET http://localhost:8082/api/alerts
+Content-Type: application/json
+
+> {%
+    client.test("Get Alerts!", function () {
+        client.assert(response.status === 200, "Response status is not 200");
+    });
+%}
+
+###
+
+### update
+PUT http://localhost:8082/api/alerts/1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "type": "flood",
+  "location": "rajshahi",
+  "severity": "high",
+  "description": "to much rain",
+  "isActive": true
+}
+
+> {%
+    client.test("Update Alert!", function () {
+        client.assert(response.status === 200, "Response status is not 200");
+    });
+%}
+
+### update without authorization
+PUT http://localhost:8082/api/alerts/1
+Content-Type: application/json
+
+{
+  "type": "flood",
+  "location": "rajshahi",
+  "severity": "high",
+  "description": "to much rain",
+  "isActive": true
+}
+
+> {%
+    client.test("Update Alert!", function () {
+        client.assert(response.status === 401, "Response status is not 200");
+    });
+%}

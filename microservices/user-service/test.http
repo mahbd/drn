@@ -26,6 +26,7 @@ Content-Type: application/json
     client.test("Login", function () {
         client.assert(response.status === 200, "Response status is not 200");
     });
+    client.global.set("token", response.body.token);
 %}
 
 ###
