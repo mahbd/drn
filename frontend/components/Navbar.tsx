@@ -2,8 +2,19 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { getCurrentUser, logout } from "@/store/authService";
 import { ROUTING } from "@/store/config";
+import dynamic from "next/dynamic";
+
+const AuthStatus = dynamic(() => import("./AuthStatus"), {
+  ssr: false,
+  loading: () => <div className="skeleton h-8 w-12"></div>,
+});
+
+interface NavLink {
+  id: string;
+  title: string;
+  children?: NavLink[];
+}
 
 export const navLinks = [
   {
@@ -11,8 +22,34 @@ export const navLinks = [
     title: "Home",
   },
   {
-    id: ROUTING.aboutUs,
+    id: ROUTING.ourMission + "0",
     title: "About Us",
+    children: [
+      {
+        id: ROUTING.partnersAndSponsors,
+        title: "Partners and Sponsors",
+      },
+      {
+        id: ROUTING.ourTeam,
+        title: "Our Team",
+      },
+      {
+        id: ROUTING.ourMission,
+        title: "Our Mission",
+      },
+      {
+        id: ROUTING.ourVision,
+        title: "Our Vision",
+      },
+      {
+        id: ROUTING.privacyPolicy,
+        title: "Privacy Policy",
+      },
+      {
+        id: ROUTING.termsAndConditions,
+        title: "Terms and Conditions",
+      },
+    ],
   },
 ];
 
@@ -20,26 +57,19 @@ const Navbar = () => {
   const pathname = usePathname();
 
   return (
-    <div className={"mx-10"}>
-      {/* Desktop Navigation */}
+    <div>
       <nav className="sm:flex hidden navbar px-5 py-0 min-h-10 rounded-2xl bg-base-100">
         <div className="navbar-start">
           <Link href={"/"} className="btn btn-ghost btn-sm text-lg font-medium">
             DRN
           </Link>
-          {navLinks.map((nav) => (
-            <span key={nav.id} className="mx-1">
-              <a href={`${nav.id}`}>{nav.title}</a>
-            </span>
-          ))}
+          <DesktopLink navs={navLinks} />
         </div>
         <div className="navbar-end">
           <AuthStatus />
         </div>
       </nav>
-
-      {/* Mobile Navigation */}
-      <div className="navbar bg-base-200 sm:hidden flex min-h-4 py-1">
+      <div className="navbar bg-base-200 sm:hidden flex min-h-4 py-1 z-auto">
         <div className="navbar-start">
           <div className="dropdown">
             <div
@@ -64,18 +94,9 @@ const Navbar = () => {
             </div>
             <ul
               tabIndex={0}
-              className="menu menu-sm dropdown-content mt-3 z-[1] shadow bg-base-100 rounded-box w-52"
+              className="menu menu-sm dropdown-content mt-3 z-[10] shadow bg-base-100 rounded-box w-60"
             >
-              {navLinks.map((nav, index) => (
-                <li
-                  key={nav.id}
-                  className={`font-poppins cursor-pointer text-[16px] ${
-                    pathname.search(nav.id) === 0 ? "font-bold" : ""
-                  } ${index === navLinks.length - 1 ? "mb-0" : "mb-4"}`}
-                >
-                  <a href={`${nav.id}`}>{nav.title}</a>
-                </li>
-              ))}
+              <MobileLink navs={navLinks} />
             </ul>
           </div>
         </div>
@@ -94,53 +115,70 @@ const Navbar = () => {
 
 export default Navbar;
 
-const AuthStatus = () => {
-  const user = getCurrentUser();
-
-  if (!user)
-    return (
-      <Link href={ROUTING.login} className="nav-link">
-        Login
-      </Link>
-    );
-
+const DesktopLink = ({ navs }: { navs: NavLink[] }) => {
   return (
-    <div className="dropdown dropdown-end max-h-4">
-      <div
-        tabIndex={0}
-        role="button"
-        className="btn btn-ghost btn-sm btn-circle avatar -m-2"
-      >
-        <div className="w-10 rounded-full">
-          <div className="w-10 h-10 bg-green-600">
-            <p className="pt-1 text-lg font-bold uppercase">{user.email![0]}</p>
-          </div>
-        </div>
-      </div>
-      <ul
-        tabIndex={0}
-        className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
-      >
-        <li>
-          <Link href={ROUTING.profile} className="justify-between">
-            Profile
-            <span className="badge">New</span>
-          </Link>
-        </li>
-        {user.role === "admin" && (
-          <li>
-            <Link href={ROUTING.admin} className="justify-between">
-              Admin Panel
-              <span className="badge">New</span>
-            </Link>
+    <div>
+      {navs.map((nav) => {
+        if (nav.children) {
+          return (
+            <div
+              key={nav.id}
+              className="dropdown dropdown-bottom dropdown-hover cursor-pointer"
+            >
+              <div tabIndex={0}>{nav.title}</div>
+              <ul className="menu dropdown-content bg-base-100 rounded-box z-[10]">
+                {nav.children.map((child) => (
+                  <li key={child.id}>
+                    <a href={child.id} className={"whitespace-nowrap"}>
+                      {child.title}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          );
+        }
+        return (
+          <span key={nav.id} className="mx-1">
+            <a href={`${nav.id}`}>{nav.title}</a>
+          </span>
+        );
+      })}
+    </div>
+  );
+};
+
+const MobileLink = ({ navs }: { navs: NavLink[] }) => {
+  const pathname = usePathname();
+  return (
+    <div>
+      {navs.map((nav, index) => {
+        if (nav.children) {
+          return (
+            <div key={nav.id} className="collapse collapse-arrow">
+              <input type="checkbox" className="peer" />
+              <li className="collapse-title cursor-pointer -ms-1">
+                {nav.title}
+              </li>
+              <div className="collapse-content">
+                <ul className={"-mt-5"}>
+                  <MobileLink navs={nav.children} />
+                </ul>
+              </div>
+            </div>
+          );
+        }
+        return (
+          <li
+            key={nav.id}
+            className={`cursor-pointer ${
+              pathname.search(nav.id) === 0 ? "font-bold" : ""
+            }`}
+          >
+            <a href={`${nav.id}`}>{nav.title}</a>
           </li>
-        )}
-        <li>
-          <button onClick={() => logout()} className={"btn btn-xs btn-error"}>
-            Sign Out
-          </button>
-        </li>
-      </ul>
+        );
+      })}
     </div>
   );
 };
