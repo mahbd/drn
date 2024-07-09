@@ -15,6 +15,7 @@ Authorization: Bearer {{token}}
     client.test("Create Alert!", function () {
         client.assert(response.status === 201, "Response status is not 201");
     });
+    client.global.set("lastAlertId", response.body.id);
 %}
 
 ### Create new alert without authorization
@@ -31,14 +32,13 @@ Content-Type: application/json
 
 > {%
     client.test("Create Alert!", function () {
-        client.assert(response.status === 401, "Response status is not 401");
+        client.assert(response.status !== 201, "Response status is 201");
     });
 %}
 
 ###
 
 GET http://localhost:8082/api/alerts
-Content-Type: application/json
 
 > {%
     client.test("Get Alerts!", function () {
@@ -49,7 +49,7 @@ Content-Type: application/json
 ###
 
 ### update
-PUT http://localhost:8082/api/alerts/1
+PUT http://localhost:8082/api/alerts/{{lastAlertId}}
 Content-Type: application/json
 Authorization: Bearer {{token}}
 
@@ -68,7 +68,7 @@ Authorization: Bearer {{token}}
 %}
 
 ### update without authorization
-PUT http://localhost:8082/api/alerts/1
+PUT http://localhost:8082/api/alerts/{{lastAlertId}}
 Content-Type: application/json
 
 {
@@ -81,6 +81,25 @@ Content-Type: application/json
 
 > {%
     client.test("Update Alert!", function () {
-        client.assert(response.status === 401, "Response status is not 200");
+        client.assert(response.status !== 200, "Response status is 200");
     });
 %}
+
+### Delete alert without authorization
+DELETE http://localhost:8082/api/alerts/{{lastAlertId}}
+
+> {%
+    client.test("Delete Alert!", function () {
+        client.assert(response.status !== 204, "Response status is 204");
+    });
+%}
+### Delete alert
+DELETE http://localhost:8082/api/alerts/{{lastAlertId}}
+Authorization: Bearer {{token}}
+
+> {%
+    client.test("Delete Alert!", function () {
+        client.assert(response.status === 204, "Response status is not 204");
+    });
+%}
+

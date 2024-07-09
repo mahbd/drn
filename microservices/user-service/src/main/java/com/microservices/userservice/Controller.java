@@ -43,14 +43,14 @@ public class Controller {
 
     private String createJwtToken(User user) {
         Instant now = Instant.now();
-        Instant expiry = now.plusSeconds(86400);
+        Instant expiry = now.plusSeconds(5256576);
         try {
             Algorithm algorithm = Algorithm.HMAC256(jwtSecretKey);
             return JWT.create()
                     .withIssuer("drn")
                     .withClaim("id", user.getId())
                     .withClaim("email", user.getEmail())
-                    .withClaim("role", user.getRole())
+                    .withClaim("role", user.getRole().toString())
                     .withIssuedAt(Date.from(now))
                     .withExpiresAt(Date.from(expiry))
                     .sign(algorithm);
