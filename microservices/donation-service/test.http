@@ -1,0 +1,91 @@
+### Login Donor
+POST http://localhost:8081/api/users/login
+Content-Type: application/json
+
+{
+  "email": "mahmudula2003@gmail.com",
+  "password": "1234"
+}
+
+> {%
+    client.test("Login Donor", function () {
+        client.assert(response.status === 200, "Response status is not 200");
+    });
+    client.global.set("token", response.body.token);
+%}
+
+### Create new donation
+POST http://localhost:8083/api/donations
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "userId": 102,
+  "amount": 1000
+}
+
+> {%
+    client.test("Create new donation", function () {
+        client.assert(response.status === 201, "Response status is not 201");
+    });
+    client.global.set("lastDonationId", response.body.id);
+%}
+
+### Create new donation without authorization
+POST http://localhost:8083/api/donations
+Content-Type: application/json
+
+{
+  "userId": 102,
+  "amount": 1000
+}
+
+> {%
+    client.test("Attempt to create donation without authorization", function () {
+        client.assert(response.status === 401, "Expected unauthorized status 401");
+    });
+%}
+
+### Update donation
+PUT http://localhost:8083/api/donations/{{lastDonationId}}
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "userId": 102,
+  "amount": 2000
+}
+
+> {%
+    client.test("Update donation", function () {
+        client.assert(response.status !== 200, "Response status is 200");
+    });
+%}
+
+### Get all donations
+GET http://localhost:8083/api/donations
+
+> {%
+    client.test("Get all donations", function () {
+        client.assert(response.status === 200, "Response status is not 200");
+    });
+%}
+
+### Delete donation without authorization
+DELETE http://localhost:8083/api/donations/{{lastDonationId}}
+
+> {%
+    client.test("Attempt to delete donation without authorization", function () {
+        client.assert(response.status === 401, "Expected unauthorized status 401");
+    });
+%}
+
+### Delete donation
+DELETE http://localhost:8083/api/donations/{{lastDonationId}}
+Authorization: Bearer {{token}}
+
+> {%
+    client.test("Delete donation", function () {
+        client.assert(response.status === 204, "Response status is not 204");
+    });
+%}
