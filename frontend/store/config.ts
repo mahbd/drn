@@ -1,15 +1,23 @@
-const endpoint = "http://localhost:3000";
+const endpoint = "http://localhost:8081";
 
 export const API = {
-  login: endpoint + "/api/auth/login",
-  verifyToken: endpoint + "/api/auth/verify",
-  refreshToken: endpoint + "/api/auth/refresh",
+  register: endpoint + "/api/users/register",
+  login: endpoint + "/api/users/login",
+  verifyToken: endpoint + "/api/users/verify",
+  refreshToken: endpoint + "/api/users/refresh",
 };
 
 export const ROUTING = {
   home: "/home",
   admin: "/admin",
-  aboutUs: "/misc/about-us",
+  ourMission: "/misc/our-mission",
+  ourVision: "/misc/our-vision",
+  privacyPolicy: "/misc/privacy-policy",
+  termsAndConditions: "/misc/terms-and-conditions",
+  partnersAndSponsors: "/misc/partners-and-sponsors",
+  ourTeam: "/misc/our-team",
   profile: "/users/profile",
   login: "/users/login",
+  register: "/users/register",
+  forgotPassword: "/users/forgot-password",
 };

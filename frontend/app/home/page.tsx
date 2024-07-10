@@ -1,13 +1,15 @@
 import { Metadata } from "next";
 import Marquee from "react-fast-marquee";
-import Carousel from "@/app/home/Carousel";
-import Features from "@/app/home/Features";
+
+import Carousel from "./Carousel";
+import Features from "./Features";
+import TestimonialCards from "./TestimonialCards";
 
 const HomePage = async () => {
   // ToDo: Make marquee dynamic
   return (
     <div className={""}>
-      <Marquee className={"mt-3 mb-2 bg-red-100 rounded-lg bg-blue-100"}>
+      <Marquee className={"mt-3 mb-2 bg-red-100 rounded-lg"}>
         **ATTENTION ALL RESIDENTS IN [Affected Areas]:** A **[Cyclone
         Strength]** cyclone named **[Cyclone Name]** is **[approaching/expected
         to make landfall/currently impacting]** the area. This is a **[severity
@@ -16,7 +18,7 @@ const HomePage = async () => {
         flooding]**.
       </Marquee>
       <Carousel className={"mt-5"} />
-      <p className={"mt-5"}>
+      <p className={"mt-5 text-justify"}>
         Welcome to Disaster Response Network, your go-to platform for
         comprehensive disaster management and relief. Our website connects
         disaster-affected individuals with compassionate volunteers, facilitates
@@ -27,9 +29,21 @@ const HomePage = async () => {
         help is always at hand, making a meaningful difference in the lives of
         those in need. Together, we can turn the tide in times of disaster.
       </p>
-      <h2 className={"font-bold text-3xl mt-5 mb-2"}>Key Features</h2>
+      <h2 className={"section-title"}>Key Features</h2>
       <Features />
-      <p className={"mb-10"}></p>
+      <div className={"grid grid-cols-1 lg:grid-cols-3 mb-10 mt-10"}>
+        <button className={"btn btn-lg text-2xl m-2 btn-primary"}>
+          Make Donation
+        </button>
+        <button className={"btn btn-lg text-2xl m-2 btn-primary"}>
+          Be a Volunteer
+        </button>
+        <button className={"btn btn-lg text-2xl m-2 btn-primary"}>
+          Know More
+        </button>
+      </div>
+      <h2 className={"section-title"}>Public Cheers for Us!</h2>
+      <TestimonialCards />
     </div>
   );
 };
