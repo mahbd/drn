@@ -149,3 +149,118 @@ Authorization: Bearer {{token}}
         client.assert(response.status === 204, "Response status is not 204");
     });
 %}
+
+
+
+### Create new shelter
+POST http://localhost:8084/api/shelters
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "name": "shelter1",
+  "address": "address1",
+  "latitude": "12.971599",
+  "longitude": "77.594563",
+  "phone": "123456789"
+}
+
+> {%
+    client.test("Create new shelter", function () {
+        client.assert(response.status === 201, "Response status is not 201");
+    });
+    client.global.set("lastShelterId", response.body.id);
+%}
+
+### Create new shelter without authorization
+POST http://localhost:8084/api/shelters
+Content-Type: application/json
+
+{
+  "name": "shelter1",
+  "address": "address1",
+  "latitude": "12.971599",
+  "longitude": "77.594563",
+  "phone": "123456789"
+}
+
+> {%
+    client.test("Create new shelter without authorization", function () {
+        client.assert(response.status === 401, "Expected unauthorized status 401");
+    });
+%}
+
+### Get all shelters
+GET http://localhost:8084/api/shelters
+Authorization: Bearer {{token}}
+
+> {%
+    client.test("Get all shelters", function () {
+        client.assert(response.status === 200, "Response status is not 200");
+    });
+%}
+
+### Get shelter by id
+GET http://localhost:8084/api/shelters/{{lastShelterId}}
+
+> {%
+    client.test("Get shelter by id", function () {
+        client.assert(response.status === 200, "Response status is not 200");
+    });
+%}
+
+### Update shelter
+PUT http://localhost:8084/api/shelters/{{lastShelterId}}
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "name": "shelter2",
+  "address": "address2",
+  "latitude": "12.971599",
+  "longitude": "77.594563",
+  "phone": "123456789"
+}
+
+> {%
+    client.test("Update shelter", function () {
+        client.assert(response.status === 200, "Response status is not 200");
+    });
+%}
+
+### Update shelter without authorization
+PUT http://localhost:8084/api/shelters/{{lastShelterId}}
+Content-Type: application/json
+
+{
+  "name": "shelter2",
+  "address": "address2",
+  "latitude": "12.971599",
+  "longitude": "77.594563",
+  "phone": "123456789"
+}
+
+> {%
+    client.test("Update shelter without authorization", function () {
+        client.assert(response.status === 401, "Expected unauthorized status 401");
+    });
+%}
+
+### Delete shelter without authorization
+DELETE http://localhost:8084/api/shelters/{{lastShelterId}}
+
+> {%
+    client.test("Delete shelter without authorization", function () {
+        client.assert(response.status === 401, "Expected unauthorized status 401");
+    });
+%}
+
+### Delete shelter
+DELETE http://localhost:8084/api/shelters/{{lastShelterId}}
+Authorization: Bearer {{token}}
+
+> {%
+    client.test("Delete shelter", function () {
+        client.assert(response.status === 204, "Response status is not 204");
+    });
+%}
