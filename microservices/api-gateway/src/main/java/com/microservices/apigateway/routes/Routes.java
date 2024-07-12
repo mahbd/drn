@@ -17,6 +17,9 @@ public class Routes {
                 .route(RequestPredicates.path("/api/alerts/**"), HandlerFunctions.http("http://localhost:8082"))
                 .route(RequestPredicates.path("/api/donations/**"), HandlerFunctions.http("http://localhost:8083"))
                 .route(RequestPredicates.path("/api/evacuation-routes/**"), HandlerFunctions.http("http://localhost:8084"))
+                .route(RequestPredicates.path("/api/incidents/**"), HandlerFunctions.http("http://localhost:8084"))
+                .route(RequestPredicates.path("/api/shelters/**"), HandlerFunctions.http("http://localhost:8084"))
+                .route(RequestPredicates.path("/api/chatbot/**"), HandlerFunctions.http("http://localhost:8085"))
                 .build();
     }
 }
