@@ -12,6 +12,7 @@ Content-Type: application/json
         client.assert(response.status === 200, "Response status is not 200");
     });
     client.global.set("token", response.body.token);
+    client.global.set("userId", response.body.userId);
 %}
 
 ### Create new evacuation route
@@ -261,6 +262,70 @@ Authorization: Bearer {{token}}
 
 > {%
     client.test("Delete shelter", function () {
+        client.assert(response.status === 204, "Response status is not 204");
+    });
+%}
+
+### Create Incident
+POST http://localhost:8084/api/incidents
+Content-Type: application/json
+
+{
+    "reportedBy": {{userId}},
+    "incidentType": "fire",
+    "latitude": "12.971599",
+    "longitude": "77.594563",
+    "description": "Fire in the family house"
+}
+
+> {%
+    client.test("Create Incident", function () {
+        client.assert(response.status === 201, "Response status is not 201");
+    });
+    client.global.set("lastIncidentId", response.body.id);
+%}
+
+### Get all incidents
+GET http://localhost:8084/api/incidents
+
+> {%
+    client.test("Get all incidents", function () {
+        client.assert(response.status === 200, "Response status is not 200");
+    });
+%}
+
+### Get incident by id
+GET http://localhost:8084/api/incidents/{{lastIncidentId}}
+
+> {%
+    client.test("Get incident by id", function () {
+        client.assert(response.status === 200, "Response status is not 200");
+    });
+%}
+
+### Update incident
+PUT http://localhost:8084/api/incidents/{{lastIncidentId}}
+Content-Type: application/json
+
+{
+    "reportedBy": {{userId}},
+    "incidentType": "fire",
+    "latitude": "12.971599",
+    "longitude": "77.594563",
+    "description": "Fire in the family house"
+}
+
+> {%
+    client.test("Update incident", function () {
+        client.assert(response.status === 200, "Response status is not 200");
+    });
+%}
+
+### Delete incident
+DELETE http://localhost:8084/api/incidents/{{lastIncidentId}}
+
+> {%
+    client.test("Delete incident", function () {
         client.assert(response.status === 204, "Response status is not 204");
     });
 %}
