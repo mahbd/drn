@@ -16,6 +16,7 @@ public class ChatQueryController {
     private final ChatQueryService chatQueryService;
 
     @PostMapping
+    @UserService.RequiresRole({UserService.Role.CITIZEN, UserService.Role.ADMIN, UserService.Role.VOLUNTEER, UserService.Role.DONOR})
     public ResponseEntity<ChatQueryResponse> createChatQuery(@RequestBody ChatQueryRequest chatQueryRequest) {
         ChatQueryResponse chatQueryResponse = chatQueryService.createChatQuery(chatQueryRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(chatQueryResponse);

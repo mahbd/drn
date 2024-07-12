@@ -2,8 +2,6 @@ package com.microservices.donationservice;
 
 import com.microservices.donationservice.dto.DonationRequest;
 import com.microservices.donationservice.dto.DonationResponse;
-import com.microservices.donationservice.userService.RequiresRole;
-import com.microservices.donationservice.userService.Role;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,14 +14,14 @@ public class DonationController {
     private final DonationService donationService;
 
     @PostMapping
-    @RequiresRole(Role.DONOR)
+    @UserService.RequiresRole({UserService.Role.DONOR})
     public ResponseEntity<Object> createDonation(@RequestBody DonationRequest donationRequest) {
         DonationResponse donationResponse = donationService.createDonation(donationRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(donationResponse);
     }
 
     @PutMapping("/{id}")
-    @RequiresRole(Role.ADMIN)
+    @UserService.RequiresRole({UserService.Role.ADMIN, UserService.Role.DONOR})
     public ResponseEntity<Object> updateDonation(@PathVariable Long id, @RequestBody Donation donation) {
         Donation updatedDonation = donationService.updateDonation(id, donation);
 
@@ -40,7 +38,7 @@ public class DonationController {
     }
 
     @DeleteMapping("/{id}")
-    @RequiresRole(Role.DONOR)
+    @UserService.RequiresRole({UserService.Role.DONOR, UserService.Role.ADMIN})
     public ResponseEntity<Object> deleteDonation(@PathVariable Long id) {
         donationService.deleteDonation(id);
         return ResponseEntity.noContent().build();

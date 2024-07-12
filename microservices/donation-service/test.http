@@ -58,7 +58,7 @@ Authorization: Bearer {{token}}
 
 > {%
     client.test("Update donation", function () {
-        client.assert(response.status !== 200, "Response status is 200");
+        client.assert(response.status === 200, "Response status is not 200");
     });
 %}
 

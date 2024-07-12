@@ -24,3 +24,26 @@ Content-Type: application/json
   "userId": {{userId}},
   "query": "What is the capital of France?"
 }
+
+> {%
+    client.test("Create a chat query", function () {
+        client.assert(response.status === 201, "Response status is not 201");
+        client.global.set("chatQueryId", response.body.id);
+    });
+%}
+
+### Create a chat query unauthorized
+POST http://localhost:8085/api/chat-queries
+Content-Type: application/json
+
+{
+  "userId": {{userId}},
+  "query": "What is the capital of France?"
+}
+
+> {%
+    client.test("Create a chat query", function () {
+        client.assert(response.status === 201, "Response status is not 201");
+        client.global.set("chatQueryId", response.body.id);
+    });
+%}

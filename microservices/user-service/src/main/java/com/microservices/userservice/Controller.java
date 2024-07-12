@@ -85,12 +85,12 @@ public class Controller {
             UserResponse userResponse = userService.getUserById(userId);
             if (userResponse == null) {
                 var body = Map.of("message", "User does not exist");
-                return ResponseEntity.ok().body(body);
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(body);
             }
             return ResponseEntity.ok(userResponse);
         } catch (JWTVerificationException exception){
             var body = Map.of("message", "Invalid token");
-            return ResponseEntity.ok().body(body);
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(body);
         }
     }
 

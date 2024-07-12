@@ -1,10 +1,9 @@
 package com.microservices.othersservice.controller;
 
+import com.microservices.othersservice.UserService;
 import com.microservices.othersservice.dto.ShelterRequest;
 import com.microservices.othersservice.dto.ShelterResponse;
 import com.microservices.othersservice.service.ShelterService;
-import com.microservices.othersservice.userService.RequiresRole;
-import com.microservices.othersservice.userService.Role;
 import lombok.AllArgsConstructor;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.HttpStatus;
@@ -20,7 +19,7 @@ public class ShelterController {
     private final ShelterService shelterService;
 
     @PostMapping
-    @RequiresRole(Role.ADMIN)
+    @UserService.RequiresRole({UserService.Role.ADMIN})
     public ResponseEntity<ShelterResponse> createShelter(@RequestBody ShelterRequest shelterRequest) {
         ShelterResponse shelterResponse = shelterService.createShelter(shelterRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(shelterResponse);
@@ -43,7 +42,7 @@ public class ShelterController {
     }
 
     @PutMapping("/{id}")
-    @RequiresRole(Role.ADMIN)
+    @UserService.RequiresRole({UserService.Role.ADMIN})
     public ResponseEntity<ShelterResponse> updateShelter(@RequestBody ShelterRequest shelterRequest, @PathVariable Long id) {
         ShelterResponse shelterResponse;
         try {
@@ -55,7 +54,7 @@ public class ShelterController {
     }
 
     @DeleteMapping("/{id}")
-    @RequiresRole(Role.ADMIN)
+    @UserService.RequiresRole({UserService.Role.ADMIN})
     public ResponseEntity<Void> deleteShelter(@PathVariable Long id) {
         shelterService.deleteShelter(id);
         return ResponseEntity.noContent().build();

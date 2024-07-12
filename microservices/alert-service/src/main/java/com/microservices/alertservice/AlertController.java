@@ -3,8 +3,6 @@ package com.microservices.alertservice;
 
 import com.microservices.alertservice.dto.AlertRequest;
 import com.microservices.alertservice.dto.AlertResponse;
-import com.microservices.alertservice.userService.RequiresRole;
-import com.microservices.alertservice.userService.Role;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,13 +17,13 @@ public class AlertController {
     private final AlertService alertService;
 
     @PostMapping
-    @RequiresRole(Role.ADMIN)
+    @UserService.RequiresRole({UserService.Role.ADMIN})
     public ResponseEntity<Object> createAlert(@RequestBody AlertRequest alertRequest) {
         return ResponseEntity.status(HttpStatus.CREATED).body(alertService.createAlert(alertRequest));
     }
 
     @PutMapping("/{id}")
-    @RequiresRole(Role.ADMIN)
+    @UserService.RequiresRole({UserService.Role.ADMIN})
     public ResponseEntity<Object> updateAlert(@PathVariable Long id, @RequestBody Alert alert) {
         Alert updatedAlert = alertService.updateAlert(id, alert);
 
@@ -44,7 +42,7 @@ public class AlertController {
     }
 
     @DeleteMapping("/{id}")
-    @RequiresRole(Role.ADMIN)
+    @UserService.RequiresRole({UserService.Role.ADMIN})
     public ResponseEntity<Object> deleteAlert(@PathVariable Long id) {
         alertService.deleteAlert(id);
         return ResponseEntity.noContent().build();
