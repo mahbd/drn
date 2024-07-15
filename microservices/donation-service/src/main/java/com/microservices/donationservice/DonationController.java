@@ -14,14 +14,14 @@ public class DonationController {
     private final DonationService donationService;
 
     @PostMapping
-    @UserService.RequiresRole({UserService.Role.DONOR})
+    @UserService.RequiresRole({UserService.Role.DONOR, UserService.Role.CITIZEN, UserService.Role.ADMIN, UserService.Role.VOLUNTEER})
     public ResponseEntity<Object> createDonation(@RequestBody DonationRequest donationRequest) {
         DonationResponse donationResponse = donationService.createDonation(donationRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(donationResponse);
     }
 
     @PutMapping("/{id}")
-    @UserService.RequiresRole({UserService.Role.ADMIN, UserService.Role.DONOR})
+    @UserService.RequiresRole({UserService.Role.DONOR, UserService.Role.CITIZEN, UserService.Role.ADMIN, UserService.Role.VOLUNTEER})
     public ResponseEntity<Object> updateDonation(@PathVariable Long id, @RequestBody Donation donation) {
         Donation updatedDonation = donationService.updateDonation(id, donation);
 
@@ -38,7 +38,7 @@ public class DonationController {
     }
 
     @DeleteMapping("/{id}")
-    @UserService.RequiresRole({UserService.Role.DONOR, UserService.Role.ADMIN})
+    @UserService.RequiresRole({UserService.Role.DONOR, UserService.Role.CITIZEN, UserService.Role.ADMIN, UserService.Role.VOLUNTEER})
     public ResponseEntity<Object> deleteDonation(@PathVariable Long id) {
         donationService.deleteDonation(id);
         return ResponseEntity.noContent().build();

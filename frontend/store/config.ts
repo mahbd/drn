@@ -1,10 +1,12 @@
-const endpoint = "http://localhost:8081";
+export const APIEndpoint = "http://localhost:8000";
 
 export const API = {
-  register: endpoint + "/api/users/register",
-  login: endpoint + "/api/users/login",
-  verifyToken: endpoint + "/api/users/verify",
-  refreshToken: endpoint + "/api/users/refresh",
+  register: APIEndpoint + "/api/users/register",
+  login: APIEndpoint + "/api/users/login",
+  verifyToken: APIEndpoint + "/api/users/verify",
+  refreshToken: APIEndpoint + "/api/users/refresh",
+
+  donations: APIEndpoint + "/api/donations",
 };
 
 export const ROUTING = {
@@ -19,5 +21,7 @@ export const ROUTING = {
   profile: "/users/profile",
   login: "/users/login",
   register: "/users/register",
+  newDonation: "/donations/new",
+  donations: "/donations",
   forgotPassword: "/users/forgot-password",
 };

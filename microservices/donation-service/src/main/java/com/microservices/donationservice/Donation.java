@@ -13,8 +13,8 @@ import java.time.LocalDateTime;
 @Table(name = "donations")
 public class Donation {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "alerts_seq")
-    @SequenceGenerator(name = "alerts_seq")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "donations_seq")
+    @SequenceGenerator(name = "donations_seq")
     private Long id;
     private Long userId;
     private Long amount;

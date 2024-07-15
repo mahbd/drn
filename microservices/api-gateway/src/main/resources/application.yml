@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      globalCors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: "https://docs.spring.io"
+
+server:
+  port: 8000
+  address: localhost

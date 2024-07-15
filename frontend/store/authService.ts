@@ -1,7 +1,7 @@
 import { jwtDecode } from "jwt-decode";
-import httpService from "./httpService";
-import { API, ROUTING } from "@/store/config";
+import { API } from "@/store/config";
 import { redirect } from "next/navigation";
+import axios from "axios";
 
 type Role = "admin" | "citizen" | "donor" | "volunteer";
 
@@ -14,7 +14,6 @@ export interface DecodedToken {
 
 export function logout(redirectURL?: string) {
   localStorage.removeItem("access");
-  localStorage.removeItem("refresh");
   if (redirectURL) redirect(redirectURL);
   else window.location.reload();
 }
@@ -28,17 +27,13 @@ export function setJwt(jwt: string) {
   return localStorage.setItem("access", jwt);
 }
 
-export function setRefreshToken(refreshToken: string) {
-  return localStorage.setItem("refresh", refreshToken);
-}
-
 export const loginWithPassword = async (
   email: string,
   password: string,
   redirectURI?: string,
 ) => {
   try {
-    const response = await httpService.post(`${API.login}`, {
+    const response = await axios.post(`${API.login}`, {
       email,
       password,
     });
@@ -66,10 +61,6 @@ export function getCurrentUser() {
   }
 }
 
-export function getRefreshToken() {
-  return localStorage.getItem("refresh");
-}
-
 export const refreshAccessToken = () => {
-  window.location.href = ROUTING.login;
+  localStorage.removeItem("access");
 };

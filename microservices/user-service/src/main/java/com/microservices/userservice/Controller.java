@@ -21,7 +21,6 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/users")
-@CrossOrigin(origins = "*")
 public class Controller {
     @Value("${security.jwt.secret-key}")
     private String jwtSecretKey;

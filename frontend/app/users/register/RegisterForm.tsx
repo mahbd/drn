@@ -2,7 +2,7 @@
 
 import useFormComponents from "@/components/useFormComponents";
 import { API, ROUTING } from "@/store/config";
-import httpService from "@/store/httpService";
+import httpService from "@/store/http";
 import {
   RegisterFormData,
   registerSchema,

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { getJwt, refreshAccessToken } from "@/store/authService";
+import { getJwt } from "@/store/authService";
 
 if (getJwt()) {
   axios.defaults.headers.common["authorization"] = "Bearer " + getJwt();
@@ -16,13 +16,13 @@ axios.interceptors.response.use(
       error.response.status < 500;
 
     if (getJwt() && error.response && error.response.status === 401) {
-      refreshAccessToken();
+      // refreshAccessToken();
       return Promise.reject(error);
     }
 
     if (!expectedError) {
       console.log("Logging the error", error);
-      alert("An unexpected error.");
+      alert("An unexpected error." + (error.response && error.response.status));
     }
     return Promise.reject(error);
   },
