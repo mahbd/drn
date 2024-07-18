@@ -116,7 +116,7 @@ const useFormComponents = <T extends FieldValues>(
   }
 
   const Select = ({ name, label, items, valueKey, labelKey }: SelectProps) => (
-    <div className="form-control w-full">
+    <div className="form-control w-full my-5">
       <select className="select select-sm select-bordered" {...register(name)}>
         <option value={""}>Select a {label || reformatString(name)}</option>
         {items.map((item) => (

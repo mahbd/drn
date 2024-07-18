@@ -4,11 +4,11 @@ import { Donation } from "@/store/models";
 import useModels from "@/store/useModels";
 import Spinner from "@/components/Spinner";
 import Link from "next/link";
-import { ROUTING } from "@/store/config";
+import { API, ROUTING } from "@/store/config";
 import { useEffect } from "react";
 
 const DonationsPage = () => {
-  const { data: donations, isLoading } = useModels<Donation>("/api/donations");
+  const { data: donations, isLoading } = useModels<Donation>(API.donations);
   useEffect(() => {
     document.title = "Donations | DRN";
   }, []);

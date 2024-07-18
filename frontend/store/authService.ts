@@ -2,6 +2,7 @@ import { jwtDecode } from "jwt-decode";
 import { API } from "@/store/config";
 import { redirect } from "next/navigation";
 import axios from "axios";
+import { User } from "@/store/models";
 
 type Role = "admin" | "citizen" | "donor" | "volunteer";
 
@@ -51,15 +52,15 @@ export const loginWithPassword = async (
   }
 };
 
-export function getCurrentUser() {
+export const getCurrentUser = () => {
   try {
     const jwt = localStorage.getItem("access");
-    if (jwt) return jwtDecode<DecodedToken>(jwt);
+    if (jwt) return jwtDecode<DecodedToken>(jwt) as unknown as User;
     return null;
   } catch {
     return null;
   }
-}
+};
 
 export const refreshAccessToken = () => {
   localStorage.removeItem("access");

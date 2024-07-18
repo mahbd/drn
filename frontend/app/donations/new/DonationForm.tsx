@@ -5,16 +5,24 @@ import { API, ROUTING } from "@/store/config";
 import {
   DonationFormData,
   donationSchema,
-} from "@/app/donations/donationSchema";
+} from "@/app/donations/new/donationSchema";
 import http from "@/store/http";
 import { Donation } from "@/store/models";
 import useDialogue from "@/components/useDialogue";
+import { getCurrentUser } from "@/store/authService";
+import { useEffect } from "react";
 
 const LoginForm = () => {
   const { Input, SubmitBtn, handleSubmit, setIsSubmitting, setError } =
     useFormComponents<DonationFormData>(donationSchema, {});
 
   const { Dialogue, setTitle, setDescription, showDialogue } = useDialogue();
+
+  useEffect(() => {
+    if (getCurrentUser() === null) {
+      window.location.href = ROUTING.login;
+    }
+  }, []);
 
   const doSubmit = async (data: DonationFormData) => {
     setIsSubmitting(true);

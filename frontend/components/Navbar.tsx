@@ -26,6 +26,10 @@ export const navLinks = [
     title: "Donations",
   },
   {
+    id: ROUTING.alerts,
+    title: "Alerts",
+  },
+  {
     id: ROUTING.ourMission + "0",
     title: "About Us",
     children: [

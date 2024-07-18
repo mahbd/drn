@@ -7,9 +7,12 @@ export const API = {
   refreshToken: APIEndpoint + "/api/users/refresh",
 
   donations: APIEndpoint + "/api/donations",
+  alerts: APIEndpoint + "/api/alerts",
 };
 
 export const ROUTING = {
+  alerts: "/alerts",
+  newAlert: "/alerts/new",
   home: "/home",
   admin: "/admin",
   ourMission: "/misc/our-mission",

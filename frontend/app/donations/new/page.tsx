@@ -1,6 +1,6 @@
 "use client";
 
-import DonationForm from "@/app/donations/DonationForm";
+import DonationForm from "@/app/donations/new/DonationForm";
 import { useEffect } from "react";
 
 const NewDonation = () => {
