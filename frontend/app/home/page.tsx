@@ -1,22 +1,14 @@
 import { Metadata } from "next";
-import Marquee from "react-fast-marquee";
 
 import Carousel from "./Carousel";
 import Features from "./Features";
 import TestimonialCards from "./TestimonialCards";
+import Alerts from "@/app/home/Alerts";
 
 const HomePage = async () => {
-  // ToDo: Make marquee dynamic
   return (
-    <div className={""}>
-      <Marquee className={"mt-3 mb-2 bg-red-100 rounded-lg"}>
-        **ATTENTION ALL RESIDENTS IN [Affected Areas]:** A **[Cyclone
-        Strength]** cyclone named **[Cyclone Name]** is **[approaching/expected
-        to make landfall/currently impacting]** the area. This is a **[severity
-        level - e.g., serious, dangerous]** storm that could bring **[list
-        potential impacts - e.g., damaging winds, storm surge, heavy rainfall,
-        flooding]**.
-      </Marquee>
+    <>
+      <Alerts />
       <Carousel className={"mt-5"} />
       <p className={"mt-5 text-justify"}>
         Welcome to Disaster Response Network, your go-to platform for
@@ -44,7 +36,7 @@ const HomePage = async () => {
       </div>
       <h2 className={"section-title"}>Public Cheers for Us!</h2>
       <TestimonialCards />
-    </div>
+    </>
   );
 };
 
