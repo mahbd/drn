@@ -8,6 +8,7 @@ export const API = {
 
   donations: APIEndpoint + "/api/donations",
   alerts: APIEndpoint + "/api/alerts",
+  chatbot: APIEndpoint + "/api/chatbot",
 };
 
 export const ROUTING = {
@@ -27,4 +28,5 @@ export const ROUTING = {
   newDonation: "/donations/new",
   donations: "/donations",
   forgotPassword: "/users/forgot-password",
+  chat: "/chat",
 };
