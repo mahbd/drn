@@ -21,6 +21,7 @@ export const ROUTING = {
   privacyPolicy: "/misc/privacy-policy",
   termsAndConditions: "/misc/terms-and-conditions",
   partnersAndSponsors: "/misc/partners-and-sponsors",
+  faq: "/misc/faq",
   ourTeam: "/misc/our-team",
   profile: "/users/profile",
   login: "/users/login",

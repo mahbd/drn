@@ -59,6 +59,10 @@ export const navLinks = [
       },
     ],
   },
+  {
+    id: ROUTING.faq,
+    title: "Faq",
+  },
 ];
 
 const Navbar = () => {
