@@ -24,6 +24,7 @@ export const ROUTING = {
   partnersAndSponsors: "/misc/partners-and-sponsors",
   faq: "/misc/faq",
   ourTeam: "/misc/our-team",
+  howWeWork: "/misc/how-we-work",
   profile: "/users/profile",
   login: "/users/login",
   register: "/users/register",

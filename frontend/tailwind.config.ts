@@ -38,8 +38,9 @@ const config = {
     themes: [
       {
         light: {
-          "base-100": "#DBEAFE",
-          "base-200": "#a5cafa",
+          "base-100": "#ddddff",
+          "base-200": "#bbbbff",
+          "base-300": "#9999ff",
           primary: "#2563EB",
         },
       },

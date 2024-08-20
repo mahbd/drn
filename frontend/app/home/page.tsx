@@ -4,6 +4,8 @@ import Carousel from "./Carousel";
 import Features from "./Features";
 import TestimonialCards from "./TestimonialCards";
 import Alerts from "@/app/home/Alerts";
+import HowWork from "@/app/home/HowWork";
+import TeamMembers from "@/app/home/TeamMembers";
 
 const HomePage = async () => {
   return (
@@ -36,6 +38,11 @@ const HomePage = async () => {
       </div>
       <h2 className={"section-title"}>Public Cheers for Us!</h2>
       <TestimonialCards />
+      <h2 className={"section-title"}>How we work</h2>
+      <HowWork few={true} />
+      <h2 className={"section-title"}>Our Team</h2>
+      <TeamMembers />
+      <div className={"mb-10"}></div>
     </>
   );
 };

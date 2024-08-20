@@ -34,6 +34,10 @@ export const navLinks = [
     title: "About Us",
     children: [
       {
+        id: ROUTING.howWeWork,
+        title: "How we work",
+      },
+      {
         id: ROUTING.partnersAndSponsors,
         title: "Partners and Sponsors",
       },
@@ -70,9 +74,9 @@ const Navbar = () => {
 
   return (
     <div>
-      <nav className="sm:flex hidden navbar px-5 py-0 min-h-10 rounded-2xl bg-base-100">
+      <nav className="sm:flex hidden navbar px-5 py-0 min-h-10 rounded-2xl bg-base-200">
         <div className="navbar-start">
-          <Link href={"/"} className="btn btn-ghost btn-sm text-lg font-medium">
+          <Link href={"/"} className="btn btn-ghost btn-sm text-lg font-bold">
             DRN
           </Link>
           <DesktopLink navs={navLinks} />
@@ -137,8 +141,10 @@ const DesktopLink = ({ navs }: { navs: NavLink[] }) => {
               key={nav.id}
               className="dropdown dropdown-bottom dropdown-hover cursor-pointer"
             >
-              <div tabIndex={0}>{nav.title}</div>
-              <ul className="menu dropdown-content bg-base-100 rounded-box z-[10]">
+              <div tabIndex={0} className={"p-1 mx-1 bg-base-300 rounded-lg"}>
+                {nav.title}
+              </div>
+              <ul className="menu dropdown-content bg-base-200 rounded-box z-[10]">
                 {nav.children.map((child) => (
                   <li key={child.id}>
                     <a href={child.id} className={"whitespace-nowrap"}>
@@ -151,7 +157,7 @@ const DesktopLink = ({ navs }: { navs: NavLink[] }) => {
           );
         }
         return (
-          <span key={nav.id} className="mx-1">
+          <span key={nav.id} className="p-2 mx-1 bg-base-300 rounded-lg">
             <a href={`${nav.id}`}>{nav.title}</a>
           </span>
         );

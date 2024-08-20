@@ -19,7 +19,20 @@ export default function RootLayout({
 }>) {
   return (
     <QueryClientProvider client={queryClient}>
-      <html lang="en">
+      <html lang="en" data-theme={"light"}>
+        <head>
+          <link rel="preconnect" href="https://fonts.googleapis.com" />
+          <link
+            rel="preconnect"
+            href="https://fonts.gstatic.com"
+            crossOrigin={"anonymous"}
+          />
+          <link
+            href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@200..900&display=swap"
+            rel="stylesheet"
+          />
+          <title>DRN</title>
+        </head>
         <body>
           <Toaster />
           <div
@@ -48,7 +61,9 @@ export default function RootLayout({
                 >
                   <IoChatbubbleEllipsesOutline />
                 </div>
-                <p className={"bg-primary py-2 px-4 rounded-2xl"}>
+                <p
+                  className={"hidden md:block bg-primary py-2 px-4 rounded-2xl"}
+                >
                   Chat with DiRi
                 </p>
               </Link>

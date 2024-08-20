@@ -7,5 +7,9 @@
 }
 
 .section-title {
-  @apply font-bold text-3xl mt-10 mb-2;
+    @apply text-center font-bold text-3xl mt-10 mb-2 bg-base-300 rounded-xl p-2;
+}
+
+body {
+    font-family: Arial, Helvetica Neue, Helvetica, sans-serif
 }

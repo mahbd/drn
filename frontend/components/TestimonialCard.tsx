@@ -10,15 +10,12 @@ export const TestimonialCard = ({ image, name, comment }: ITestimonial) => {
       <div className={"flex gap-2"}>
         <div className="avatar">
           <div className="w-12 rounded-full">
-            <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+            <img src={image} />
           </div>
         </div>
-        <h3 className={"h3 font-bold text-lg"}>Robert Newbold</h3>
+        <h3 className={"h3 font-bold text-lg"}>{name}</h3>
       </div>
-      <p>
-        This website is very helpful. We are very happy to be helped by this
-        website.
-      </p>
+      <p>{comment}</p>
     </div>
   );
 };
