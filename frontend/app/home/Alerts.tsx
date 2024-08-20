@@ -11,7 +11,9 @@ const Alerts = () => {
   return (
     <Marquee className={"mt-3 mb-2 bg-red-100 rounded-lg"}>
       {alerts.map((alert) =>
-        alert.isActive ? ` ** ${alert.description} ** ` : "",
+        alert.isActive
+          ? ` An ${alert.type} is going to affect ${alert.location} with severity ${alert.severity} ** ${alert.description} ** `
+          : "",
       )}
     </Marquee>
   );

@@ -1,13 +1,14 @@
 "use client";
 
 import "./globals.css";
-import { Navbar } from "@/components";
 import { ReactNode } from "react";
 import Footer from "@/components/Footer";
 import { IoChatbubbleEllipsesOutline } from "react-icons/io5";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Link from "next/link";
 import { ROUTING } from "@/store/config";
+import { Toaster } from "@/components/ui/toaster";
+import Navbar from "@/components/Navbar";
 
 const queryClient = new QueryClient();
 
@@ -20,6 +21,7 @@ export default function RootLayout({
     <QueryClientProvider client={queryClient}>
       <html lang="en">
         <body>
+          <Toaster />
           <div
             className={"fixed w-full h-full z-[-1]"}
             style={{

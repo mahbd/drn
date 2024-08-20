@@ -2,7 +2,7 @@
 
 import { Carousel as BC } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
-import { Hero } from "@/components";
+import Hero from "@/components/Hero";
 
 const Carousel = ({ className }: { className: string }) => {
   return (

@@ -8,12 +8,14 @@ import { getCurrentUser } from "@/store/authService";
 import { useEffect } from "react";
 import { AlertFormData, alertSchema } from "@/app/alerts/[id]/edit/alertSchema";
 import { Alert } from "@/store/models";
+import { useToast } from "@/components/ui/use-toast";
 
 interface Props {
   alert?: Alert;
 }
 
 const AlertForm = ({ alert }: Props) => {
+  const { toast } = useToast();
   const { CheckBox, Input, Select, SubmitBtn, handleSubmit, setIsSubmitting } =
     useFormComponents<AlertFormData>(alertSchema, {
       type: alert?.type || "",
@@ -33,16 +35,26 @@ const AlertForm = ({ alert }: Props) => {
 
   const doSubmit = async (data: AlertFormData) => {
     setIsSubmitting(true);
-    const res = await http.post<Alert>(API.alerts, data);
-    if (res.status === 201) {
-      setTitle("Success!");
-      setDescription("Alert created successfully!");
+    let res;
+    if (alert?.id) {
+      res = await http.put<Alert>(`${API.alerts}/${alert.id}`, data);
+    } else {
+      res = await http.post<Alert>(API.alerts, data);
+    }
+    if (res.status === 200 || res.status === 201) {
+      toast({
+        variant: "success",
+        title: "Success!",
+        description: "Your action was successful. Now redirecting...",
+      });
       window.location.href = ROUTING.alerts;
     } else {
-      setTitle("Error!");
-      setDescription("Something went wrong!");
+      toast({
+        variant: "destructive",
+        title: "Uh oh! Something went wrong.",
+        description: "There was a problem with your request.",
+      });
     }
-    showDialogue();
     setIsSubmitting(false);
   };
 
@@ -71,23 +83,24 @@ const AlertForm = ({ alert }: Props) => {
         <Select
           name={"type"}
           items={[
-            { value: "STORM", label: "Storm" },
-            { value: "FLOOD", label: "Flood" },
-            { value: "EARTHQUAKE", label: "Earthquake" },
+            { value: "Storm", label: "Storm" },
+            { value: "Fire", label: "Fire" },
+            { value: "Flood", label: "Flood" },
+            { value: "Earthquake", label: "Earthquake" },
           ]}
         />
         <Select
           name={"severity"}
           items={[
-            { value: "HIGH", label: "High" },
-            { value: "MEDIUM", label: "Medium" },
-            { value: "LOW", label: "Low" },
+            { value: "High", label: "High" },
+            { value: "Medium", label: "Medium" },
+            { value: "Low", label: "Low" },
           ]}
         />
         <Input name={"description"} type={"text"} />
         <Input name={"location"} type={"text"} />
         <CheckBox name={"isActive"} label={"Active"} />
-        <SubmitBtn label={`Create Alert`} />
+        <SubmitBtn label={alert?.id ? "Update alert" : `Create Alert`} />
         {alert?.id && (
           <button className={"btn btn-error btn-sm"} onClick={deleteAlert}>
             Delete

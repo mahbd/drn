@@ -8,9 +8,11 @@ import { useEffect } from "react";
 import { getCurrentUser } from "@/store/authService";
 import Link from "next/link";
 import http from "@/store/http";
+import { useToast } from "@/components/ui/use-toast";
 
 const AlertsPage = () => {
   const { data: alerts, isLoading } = useModels<Alert>(API.alerts);
+  const { toast } = useToast();
   useEffect(() => {
     document.title = "Alerts | DRN";
   }, []);
@@ -72,19 +74,32 @@ const AlertsPage = () => {
                           Edit
                         </Link>
                       )}
-                      <button
-                        onClick={async () => {
-                          const res = await http.delete<void>(
-                            `${API.alerts}/${alert.id}`,
-                          );
-                          if (res.status === 204) {
-                            window.location.reload();
-                          }
-                        }}
-                        className={"btn btn-error btn-sm ms-2"}
-                      >
-                        Delete
-                      </button>
+                      {user?.role === "ADMIN" && (
+                        <button
+                          onClick={async () => {
+                            const res = await http.delete<void>(
+                              `${API.alerts}/${alert.id}`,
+                            );
+                            if (res.status === 204) {
+                              toast({
+                                variant: "success",
+                                title: "Success!",
+                                description: "Alert deleted successfully!",
+                              });
+                              window.location.reload();
+                            } else {
+                              toast({
+                                variant: "destructive",
+                                title: "Error!",
+                                description: "Something went wrong!",
+                              });
+                            }
+                          }}
+                          className={"btn btn-error btn-sm ms-2"}
+                        >
+                          Delete
+                        </button>
+                      )}
                     </td>
                   </tr>
                 ))}
