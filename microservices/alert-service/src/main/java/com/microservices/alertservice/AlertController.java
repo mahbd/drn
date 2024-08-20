@@ -41,6 +41,16 @@ public class AlertController {
         return ResponseEntity.ok(allAlerts);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<AlertResponse> getAllAlert(@PathVariable Long id) {
+        AlertResponse alert = alertService.getAlertById(id);
+        if (alert != null) {
+            return ResponseEntity.ok(alert);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
     @DeleteMapping("/{id}")
     @UserService.RequiresRole({UserService.Role.ADMIN})
     public ResponseEntity<Object> deleteAlert(@PathVariable Long id) {

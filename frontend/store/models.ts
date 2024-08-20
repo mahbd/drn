@@ -49,7 +49,6 @@ export interface EvacuationRoute {
   createdAt: string;
 }
 
-// IncidentResponse(Long id, Long reportedBy, String incidentType, List<Long> assignedVolunteers, String latitude, String longitude, String description, LocalDateTime createdAt)
 export interface Incident {
   id: number;
   reportedBy: number;
@@ -61,7 +60,6 @@ export interface Incident {
   createdAt: string;
 }
 
-// ShelterResponse(Long id, String name, String address, String latitude, String longitude, String phone, LocalDateTime createdAt)
 export interface Shelter {
   id: number;
   name: string;

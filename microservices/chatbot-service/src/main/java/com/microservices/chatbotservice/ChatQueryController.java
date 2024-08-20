@@ -11,7 +11,7 @@ import java.util.List;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/api/chat-queries")
+@RequestMapping("/api/chatbot")
 public class ChatQueryController {
     private final ChatQueryService chatQueryService;
 

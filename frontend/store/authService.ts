@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
 import axios from "axios";
 import { User } from "@/store/models";
 
-type Role = "admin" | "citizen" | "donor" | "volunteer";
+export type Role = "admin" | "citizen" | "donor" | "volunteer";
 
 export interface DecodedToken {
   id: number;

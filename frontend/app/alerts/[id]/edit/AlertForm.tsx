@@ -6,7 +6,7 @@ import http from "@/store/http";
 import useDialogue from "@/components/useDialogue";
 import { getCurrentUser } from "@/store/authService";
 import { useEffect } from "react";
-import { AlertFormData, alertSchema } from "@/app/alerts/[id]/alertSchema";
+import { AlertFormData, alertSchema } from "@/app/alerts/[id]/edit/alertSchema";
 import { Alert } from "@/store/models";
 
 interface Props {

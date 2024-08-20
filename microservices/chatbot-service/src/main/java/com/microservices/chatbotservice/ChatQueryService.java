@@ -47,7 +47,8 @@ public class ChatQueryService {
         ChatQuery chatQuery = new ChatQuery();
         chatQuery.setUserId(chatQueryRequest.userId());
         chatQuery.setQuery(chatQueryRequest.query());
-        chatQuery.setResponse(getChatResponse(chatQueryRequest.query()));
+//        chatQuery.setResponse(getChatResponse(chatQueryRequest.query()));
+        chatQuery.setResponse("Working offline");
 
         chatQuery = chatQueryRepository.save(chatQuery);
         return new ChatQueryResponse(

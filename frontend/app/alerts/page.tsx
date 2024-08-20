@@ -7,6 +7,7 @@ import { API, ROUTING } from "@/store/config";
 import { useEffect } from "react";
 import { getCurrentUser } from "@/store/authService";
 import Link from "next/link";
+import http from "@/store/http";
 
 const AlertsPage = () => {
   const { data: alerts, isLoading } = useModels<Alert>(API.alerts);
@@ -52,20 +53,38 @@ const AlertsPage = () => {
                     <td className={"text-left"}>{alert.type}</td>
                     <td className={"text-left"}>{alert.location}</td>
                     <td className={"text-left"}>{alert.severity}</td>
-                    <td className={"text-left"}>{alert.description}</td>
+                    <td className={"text-left"}>
+                      {alert.description.slice(0, 30)}{" "}
+                      {alert.description.length > 30 ? "..." : ""}
+                    </td>
                     <td className={"text-left"}>
                       <Link
                         href={`${ROUTING.alerts}/${alert.id}`}
-                        className={"btn btn-primary btn-sm"}
+                        className={"btn btn-success btn-sm"}
                       >
-                        Edit
+                        Details
                       </Link>
-                      {/*<Link*/}
-                      {/*  href={`${ROUTING.deleteAlert}/${alert.id}`}*/}
-                      {/*  className={"btn btn-error btn-sm"}*/}
-                      {/*>*/}
-                      {/*  Delete*/}
-                      {/*</Link>*/}
+                      {user?.role === "ADMIN" && (
+                        <Link
+                          href={`${ROUTING.alerts}/${alert.id}/edit`}
+                          className={"btn btn-primary btn-sm ms-2"}
+                        >
+                          Edit
+                        </Link>
+                      )}
+                      <button
+                        onClick={async () => {
+                          const res = await http.delete<void>(
+                            `${API.alerts}/${alert.id}`,
+                          );
+                          if (res.status === 204) {
+                            window.location.reload();
+                          }
+                        }}
+                        className={"btn btn-error btn-sm ms-2"}
+                      >
+                        Delete
+                      </button>
                     </td>
                   </tr>
                 ))}
