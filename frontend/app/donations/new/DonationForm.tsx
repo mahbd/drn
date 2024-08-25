@@ -20,7 +20,8 @@ const LoginForm = () => {
 
   useEffect(() => {
     if (getCurrentUser() === null) {
-      window.location.href = ROUTING.login;
+      window.location.href =
+        ROUTING.login + "?redirectURI=" + ROUTING.newDonation;
     }
   }, []);
 

@@ -44,7 +44,16 @@ const DonationsPage = () => {
                   <tr key={donation.id}>
                     <td className={"text-left"}>{donation.userId}</td>
                     <td className={"text-left"}>{donation.amount} BDT</td>
-                    <td className={"text-left"}>{donation.createdAt}</td>
+                    <td className={"text-left"}>
+                      {new Date(donation.createdAt).toLocaleString("en-US", {
+                        year: "numeric",
+                        month: "short",
+                        day: "numeric",
+                        hour: "numeric",
+                        minute: "numeric",
+                        hour12: true,
+                      })}
+                    </td>
                   </tr>
                 ))}
               </tbody>

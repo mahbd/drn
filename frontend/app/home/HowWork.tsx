@@ -79,9 +79,9 @@ const HowWork = ({ few }: { few: boolean }) => {
           <div className="timeline-start mb-10 md:text-end">
             <div className="text-lg font-black">User-Centric Design</div>
             We prioritize the needs of our users by offering intuitive and
-            accessible tools. Whether you're a citizen seeking help, a volunteer
-            offering support, or an authority coordinating efforts, our platform
-            is designed to be easy to use, even under pressure
+            accessible tools. Whether you&apos;re a citizen seeking help, a
+            volunteer offering support, or an authority coordinating efforts,
+            our platform is designed to be easy to use, even under pressure
           </div>
           <hr />
         </li>
@@ -134,8 +134,8 @@ const HowWork = ({ few }: { few: boolean }) => {
           </div>
           <div className="timeline-start mb-10 md:text-end">
             <div className="text-lg font-black">Proactive Preparedness</div>
-            We don't just respond to disasters—we help communities prepare for
-            them. Through training modules, simulations, and educational
+            We don&apos;t just respond to disasters—we help communities prepare
+            for them. Through training modules, simulations, and educational
             resources, we empower users with the knowledge and skills needed to
             act effectively when disaster strikes.
           </div>

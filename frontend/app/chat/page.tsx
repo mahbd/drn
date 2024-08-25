@@ -20,7 +20,7 @@ const ChatPage = () => {
 
   useEffect(() => {
     // ToDo: Scroll to last chat
-  }, [chats ? chats[chats.length - 1].id : 0]);
+  }, [chats ? chats[chats.length - 1]?.id : 0]);
 
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);

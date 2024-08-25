@@ -9,7 +9,8 @@ export const API = {
   donations: APIEndpoint + "/api/donations",
   alerts: APIEndpoint + "/api/alerts",
   chatbot: APIEndpoint + "/api/chatbot",
-  incidents: "/api/incidents",
+  incidents: APIEndpoint + "/api/incidents",
+  shelters: APIEndpoint + "/api/shelters",
 };
 
 export const ROUTING = {
@@ -32,4 +33,6 @@ export const ROUTING = {
   donations: "/donations",
   forgotPassword: "/users/forgot-password",
   chat: "/chat",
+  newShelter: "/shelters/new",
+  shelters: "/shelters",
 };

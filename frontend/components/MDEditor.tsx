@@ -3,7 +3,7 @@ import { Options } from "easymde";
 import "easymde/dist/easymde.min.css";
 import dynamic from "next/dynamic";
 import { useMemo } from "react";
-import { Skeleton } from "@/components";
+import Skeleton from "@/components/Skeleton";
 
 const SimpleMDE = dynamic(() => import("react-simplemde-editor"), {
   ssr: false,
