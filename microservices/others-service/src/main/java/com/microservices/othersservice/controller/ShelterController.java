@@ -18,13 +18,6 @@ import java.util.List;
 public class ShelterController {
     private final ShelterService shelterService;
 
-    @PostMapping
-    @UserService.RequiresRole({UserService.Role.ADMIN})
-    public ResponseEntity<ShelterResponse> createShelter(@RequestBody ShelterRequest shelterRequest) {
-        ShelterResponse shelterResponse = shelterService.createShelter(shelterRequest);
-        return ResponseEntity.status(HttpStatus.CREATED).body(shelterResponse);
-    }
-
     @GetMapping
     public ResponseEntity<List<ShelterResponse>> getAllShelters() {
         List<ShelterResponse> shelters = shelterService.getAllShelters();
@@ -41,9 +34,17 @@ public class ShelterController {
         }
     }
 
+    @PostMapping
+    @UserService.RequiresRole({ UserService.Role.ADMIN })
+    public ResponseEntity<ShelterResponse> createShelter(@RequestBody ShelterRequest shelterRequest) {
+        ShelterResponse shelterResponse = shelterService.createShelter(shelterRequest);
+        return ResponseEntity.status(HttpStatus.CREATED).body(shelterResponse);
+    }
+
     @PutMapping("/{id}")
-    @UserService.RequiresRole({UserService.Role.ADMIN})
-    public ResponseEntity<ShelterResponse> updateShelter(@RequestBody ShelterRequest shelterRequest, @PathVariable Long id) {
+    @UserService.RequiresRole({ UserService.Role.ADMIN })
+    public ResponseEntity<ShelterResponse> updateShelter(@RequestBody ShelterRequest shelterRequest,
+            @PathVariable Long id) {
         ShelterResponse shelterResponse;
         try {
             shelterResponse = shelterService.updateShelter(shelterRequest, id);
@@ -54,7 +55,7 @@ public class ShelterController {
     }
 
     @DeleteMapping("/{id}")
-    @UserService.RequiresRole({UserService.Role.ADMIN})
+    @UserService.RequiresRole({ UserService.Role.ADMIN })
     public ResponseEntity<Void> deleteShelter(@PathVariable Long id) {
         shelterService.deleteShelter(id);
         return ResponseEntity.noContent().build();

@@ -35,4 +35,6 @@ export const ROUTING = {
   chat: "/chat",
   newShelter: "/shelters/new",
   shelters: "/shelters",
+  incidents: "/incidents",
+  newIncident: "/incidents/new",
 };

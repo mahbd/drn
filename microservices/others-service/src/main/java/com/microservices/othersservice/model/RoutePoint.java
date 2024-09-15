@@ -18,4 +18,5 @@ public class RoutePoint {
     private EvacuationRoute evacuationRoute;
     private String latitude;
     private String longitude;
+    private String address;
 }

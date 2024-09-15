@@ -5,6 +5,7 @@ import com.microservices.donationservice.dto.DonationRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -13,12 +14,24 @@ import java.util.stream.Collectors;
 public class DonationService {
     private final DonationRepository donationRepository;
 
+    public List<DonationResponse> getAllDonations() {
+        return donationRepository.findAll().stream()
+                .map(donation -> new DonationResponse(donation.getId(), donation.getUserId(), donation.getAmount(),
+                        donation.getCreatedAt()))
+                .collect(Collectors.toList());
+    }
+
+    public Donation getDonationById(Long id) {
+        return donationRepository.findById(id).orElse(null);
+    }
+
     public DonationResponse createDonation(DonationRequest donationRequest) {
         Donation donation = new Donation();
         donation.setUserId(donationRequest.userId());
         donation.setAmount(donationRequest.amount());
         donation = donationRepository.save(donation);
-        return new DonationResponse(donation.getId(), donation.getUserId(), donation.getAmount(), donation.getCreatedAt());
+        return new DonationResponse(donation.getId(), donation.getUserId(), donation.getAmount(),
+                donation.getCreatedAt());
     }
 
     public Donation updateDonation(Long id, Donation donation) {
@@ -27,12 +40,6 @@ public class DonationService {
             return donationRepository.save(donation);
         }
         return null;
-    }
-
-    public List<DonationResponse> getAllDonations() {
-        return donationRepository.findAll().stream()
-                .map(donation -> new DonationResponse(donation.getId(), donation.getUserId(), donation.getAmount(), donation.getCreatedAt()))
-                .collect(Collectors.toList());
     }
 
     public void deleteDonation(Long id) {

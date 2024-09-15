@@ -1,10 +1,7 @@
 "use client";
 
 import useFormComponents from "@/components/useFormComponents";
-import {
-  IncidentFormData,
-  incidentSchema,
-} from "@/app/incidents/incidentSchema";
+import { IncidentFormData, incidentSchema } from "./incidentSchema";
 import { Incident } from "@/store/models";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { getCurrentUser } from "@/store/authService";
@@ -41,15 +38,29 @@ const IncidentForm = ({ incident }: Props) => {
 
   const doSubmit = async (data: IncidentFormData) => {
     setIsSubmitting(true);
-    const res = await http.post<Incident>(API.incidents, data);
-    if (res.status === 201) {
-      toast({
-        title: "Success!",
-        description: "Incident reported successfully!",
-        variant: "success",
-      });
-      window.location.href = ROUTING.alerts;
-    } else {
+    try {
+      let res;
+      if (incident) {
+        res = await http.put<Incident>(`${API.incidents}/${incident.id}`, data);
+      } else {
+        res = await http.post<Incident>(API.incidents, data);
+      }
+      if (res.status === 201) {
+        toast({
+          title: "Success!",
+          description: "Incident reported successfully!",
+          variant: "success",
+        });
+        window.location.href = ROUTING.incidents;
+      } else {
+        toast({
+          title: "Error!",
+          description: "Something went wrong!",
+          variant: "destructive",
+        });
+      }
+    } catch (error) {
+      console.error(error);
       toast({
         title: "Error!",
         description: "Something went wrong!",
@@ -114,7 +125,7 @@ const IncidentForm = ({ incident }: Props) => {
           name={"incidentType"}
           items={[
             { value: "Flood", label: "Flood" },
-            { value: "Cycolone", label: "Cycolone" },
+            { value: "Cyclone", label: "Cyclone" },
             { value: "Earthquake", label: "Earthquake" },
             { value: "Road Accident", label: "Road Accident" },
             { value: "Fire Outbreak", label: "Fire Outbreak" },
