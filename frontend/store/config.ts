@@ -1,13 +1,21 @@
-const endpoint = "http://localhost:8081";
+export const APIEndpoint = "http://localhost:8000";
 
 export const API = {
-  register: endpoint + "/api/users/register",
-  login: endpoint + "/api/users/login",
-  verifyToken: endpoint + "/api/users/verify",
-  refreshToken: endpoint + "/api/users/refresh",
+  register: APIEndpoint + "/api/users/register",
+  login: APIEndpoint + "/api/users/login",
+  verifyToken: APIEndpoint + "/api/users/verify",
+  refreshToken: APIEndpoint + "/api/users/refresh",
+
+  donations: APIEndpoint + "/api/donations",
+  alerts: APIEndpoint + "/api/alerts",
+  chatbot: APIEndpoint + "/api/chatbot",
+  incidents: APIEndpoint + "/api/incidents",
+  shelters: APIEndpoint + "/api/shelters",
 };
 
 export const ROUTING = {
+  alerts: "/alerts",
+  newAlert: "/alerts/new",
   home: "/home",
   admin: "/admin",
   ourMission: "/misc/our-mission",
@@ -15,9 +23,16 @@ export const ROUTING = {
   privacyPolicy: "/misc/privacy-policy",
   termsAndConditions: "/misc/terms-and-conditions",
   partnersAndSponsors: "/misc/partners-and-sponsors",
+  faq: "/misc/faq",
   ourTeam: "/misc/our-team",
+  howWeWork: "/misc/how-we-work",
   profile: "/users/profile",
   login: "/users/login",
   register: "/users/register",
+  newDonation: "/donations/new",
+  donations: "/donations",
   forgotPassword: "/users/forgot-password",
+  chat: "/chat",
+  newShelter: "/shelters/new",
+  shelters: "/shelters",
 };

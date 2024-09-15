@@ -1,0 +1,122 @@
+### Login Admin
+POST http://localhost:8081/api/users/login
+Content-Type: application/json
+
+{
+  "email": "admin@gmail.com",
+  "password": "1234"
+}
+
+> {%
+    client.test("Login Admin", function () {
+        client.assert(response.status === 200, "Response status is not 200");
+    });
+    client.global.set("token", response.body.token);
+    client.global.set("userId", response.body.userId);
+%}
+
+### Create new alert
+POST http://localhost:8082/api/alerts
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "type": "cyclone",
+  "location": "rajshahi",
+  "severity": "high",
+  "description": "to much rain",
+  "isActive": true
+}
+
+> {%
+    client.test("Create Alert!", function () {
+        client.assert(response.status === 201, "Response status is not 201");
+    });
+    client.global.set("lastAlertId", response.body.id);
+%}
+
+### Create new alert without authorization
+POST http://localhost:8082/api/alerts
+Content-Type: application/json
+
+{
+  "type": "cyclone",
+  "location": "rajshahi",
+  "severity": "high",
+  "description": "to much rain",
+  "isActive": true
+}
+
+> {%
+    client.test("Create Alert!", function () {
+        client.assert(response.status !== 201, "Response status is 201");
+    });
+%}
+
+###
+
+GET http://localhost:8082/api/alerts
+
+> {%
+    client.test("Get Alerts!", function () {
+        client.assert(response.status === 200, "Response status is not 200");
+    });
+%}
+
+###
+
+### update
+PUT http://localhost:8082/api/alerts/{{lastAlertId}}
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "type": "flood",
+  "location": "rajshahi",
+  "severity": "high",
+  "description": "to much rain",
+  "isActive": true
+}
+
+> {%
+    client.test("Update Alert!", function () {
+        client.assert(response.status === 200, "Response status is not 200");
+    });
+%}
+
+### update without authorization
+PUT http://localhost:8082/api/alerts/{{lastAlertId}}
+Content-Type: application/json
+
+{
+  "type": "flood",
+  "location": "rajshahi",
+  "severity": "high",
+  "description": "to much rain",
+  "isActive": true
+}
+
+> {%
+    client.test("Update Alert!", function () {
+        client.assert(response.status !== 200, "Response status is 200");
+    });
+%}
+
+### Delete alert without authorization
+DELETE http://localhost:8082/api/alerts/{{lastAlertId}}
+
+> {%
+    client.test("Delete Alert!", function () {
+        client.assert(response.status !== 204, "Response status is 204");
+    });
+%}
+### Delete alert
+DELETE http://localhost:8082/api/alerts/{{lastAlertId}}
+Authorization: Bearer {{token}}
+
+> {%
+    client.test("Delete Alert!", function () {
+        client.assert(response.status === 204, "Response status is not 204");
+    });
+%}
+

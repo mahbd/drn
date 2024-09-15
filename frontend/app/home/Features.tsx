@@ -6,19 +6,25 @@ const Features = () => {
       <Feature
         image={"/images/donate.jpeg"}
         title={"Donation"}
-        description={"We accept donations to help the needed people."}
+        description={
+          "We gladly accept donations to provide essential support and assistance to those in need worldwide."
+        }
       />
 
       <Feature
-        image={"/images/donate.jpeg"}
-        title={"Donation"}
-        description={"We accept donations to help the needed people."}
+        image={"/images/chatbot_medical.jpg"}
+        title={"AI Chatbot Assistance"}
+        description={
+          "Chatbot provides critical information like first aid, shelter guidance, and emergency contacts."
+        }
       />
 
       <Feature
-        image={"/images/donate.jpeg"}
-        title={"Donation"}
-        description={"We accept donations to help the needed people."}
+        image={"/images/evacuation-route.jpg"}
+        title={"Evacuation Guidance"}
+        description={
+          "Maps showing safe evacuation routes and shelters during disasters, guiding citizens to safety."
+        }
       />
     </div>
   );

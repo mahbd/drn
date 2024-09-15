@@ -45,6 +45,12 @@ public class AlertService {
                 .collect(Collectors.toList());
     }
 
+    public AlertResponse getAlertById(Long id) {
+        return alertRepository.findById(id)
+                .map(alert -> new AlertResponse(alert.getId(), alert.getType(), alert.getLocation(), alert.getSeverity(), alert.getDescription(), alert.getIsActive(), alert.getCreatedAt()))
+                .orElse(null);
+    }
+
 
     public void deleteAlert(Long id) {
         alertRepository.deleteById(id);

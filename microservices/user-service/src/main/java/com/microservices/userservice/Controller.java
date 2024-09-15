@@ -21,7 +21,6 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/users")
-@CrossOrigin(origins = "*")
 public class Controller {
     @Value("${security.jwt.secret-key}")
     private String jwtSecretKey;
@@ -43,14 +42,14 @@ public class Controller {
 
     private String createJwtToken(User user) {
         Instant now = Instant.now();
-        Instant expiry = now.plusSeconds(86400);
+        Instant expiry = now.plusSeconds(5256576);
         try {
             Algorithm algorithm = Algorithm.HMAC256(jwtSecretKey);
             return JWT.create()
                     .withIssuer("drn")
                     .withClaim("id", user.getId())
                     .withClaim("email", user.getEmail())
-                    .withClaim("role", user.getRole())
+                    .withClaim("role", user.getRole().toString())
                     .withIssuedAt(Date.from(now))
                     .withExpiresAt(Date.from(expiry))
                     .sign(algorithm);
@@ -85,12 +84,12 @@ public class Controller {
             UserResponse userResponse = userService.getUserById(userId);
             if (userResponse == null) {
                 var body = Map.of("message", "User does not exist");
-                return ResponseEntity.ok().body(body);
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(body);
             }
             return ResponseEntity.ok(userResponse);
         } catch (JWTVerificationException exception){
             var body = Map.of("message", "Invalid token");
-            return ResponseEntity.ok().body(body);
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(body);
         }
     }
 

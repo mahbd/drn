@@ -1,5 +1,6 @@
 package com.microservices.userservice;
 
+import com.microservices.userservice.dto.Role;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,12 +18,9 @@ public class User {
     private String email;
     private String password;
     private String name;
-    @Column(nullable = true)
     private String phone;
     private String address;
-    @Column(nullable = true)
     private String gpsLat;
-    @Column(nullable = true)
     private String gpsLong;
-    private String role;
+    private Role role;
 }

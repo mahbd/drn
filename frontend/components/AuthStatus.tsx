@@ -37,7 +37,7 @@ const AuthStatus = () => {
             <span className="badge">New</span>
           </Link>
         </li>
-        {user.role === "admin" && (
+        {user.role === "ADMIN" && (
           <li className={"my-1 btn-sm"}>
             <Link href={ROUTING.admin} className="justify-between">
               Admin Panel

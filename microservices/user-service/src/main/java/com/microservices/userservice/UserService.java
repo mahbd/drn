@@ -2,6 +2,7 @@ package com.microservices.userservice;
 
 import com.microservices.userservice.dto.LoginBody;
 import com.microservices.userservice.dto.RegisterBody;
+import com.microservices.userservice.dto.Role;
 import com.microservices.userservice.dto.UserResponse;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
@@ -34,7 +35,7 @@ public class UserService {
 
         User user = new User();
         user.setEmail(registerBody.email());
-        user.setRole("citizen");
+        user.setRole(Role.CITIZEN);
         user.setPassword(hashPassword(registerBody.password()));
 
         user.setName(registerBody.name());
