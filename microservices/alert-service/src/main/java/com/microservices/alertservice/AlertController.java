@@ -1,6 +1,5 @@
 package com.microservices.alertservice;
 
-
 import com.microservices.alertservice.dto.AlertRequest;
 import com.microservices.alertservice.dto.AlertResponse;
 import lombok.AllArgsConstructor;
@@ -15,24 +14,6 @@ import java.util.List;
 @RequestMapping("/api/alerts")
 public class AlertController {
     private final AlertService alertService;
-
-    @PostMapping
-    @UserService.RequiresRole({UserService.Role.ADMIN})
-    public ResponseEntity<Object> createAlert(@RequestBody AlertRequest alertRequest) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(alertService.createAlert(alertRequest));
-    }
-
-    @PutMapping("/{id}")
-    @UserService.RequiresRole({UserService.Role.ADMIN})
-    public ResponseEntity<Object> updateAlert(@PathVariable Long id, @RequestBody Alert alert) {
-        Alert updatedAlert = alertService.updateAlert(id, alert);
-
-        if (updatedAlert != null) {
-            return ResponseEntity.ok(updatedAlert);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-    }
 
     @GetMapping
     public ResponseEntity<List<AlertResponse>> getAllAlerts() {
@@ -51,8 +32,26 @@ public class AlertController {
         }
     }
 
+    @PostMapping
+    @UserService.RequiresRole({ UserService.Role.ADMIN })
+    public ResponseEntity<Object> createAlert(@RequestBody AlertRequest alertRequest) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(alertService.createAlert(alertRequest));
+    }
+
+    @PutMapping("/{id}")
+    @UserService.RequiresRole({ UserService.Role.ADMIN })
+    public ResponseEntity<Object> updateAlert(@PathVariable Long id, @RequestBody Alert alert) {
+        Alert updatedAlert = alertService.updateAlert(id, alert);
+
+        if (updatedAlert != null) {
+            return ResponseEntity.ok(updatedAlert);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
     @DeleteMapping("/{id}")
-    @UserService.RequiresRole({UserService.Role.ADMIN})
+    @UserService.RequiresRole({ UserService.Role.ADMIN })
     public ResponseEntity<Object> deleteAlert(@PathVariable Long id) {
         alertService.deleteAlert(id);
         return ResponseEntity.noContent().build();

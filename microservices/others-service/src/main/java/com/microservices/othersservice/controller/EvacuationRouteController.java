@@ -17,13 +17,6 @@ import java.util.List;
 public class EvacuationRouteController {
     private final EvacuationRouteService evacuationRouteService;
 
-    @PostMapping
-    @UserService.RequiresRole({UserService.Role.ADMIN})
-    public ResponseEntity<EvacuationRouteResponse> createEvacuationRoute(@RequestBody EvacuationRouteRequest evacuationRouteRequest) {
-        EvacuationRouteResponse evacuationRouteResponse = evacuationRouteService.createEvacuationRoute(evacuationRouteRequest);
-        return ResponseEntity.status(HttpStatus.CREATED).body(evacuationRouteResponse);
-    }
-
     @GetMapping
     public ResponseEntity<List<EvacuationRouteResponse>> getAllEvacuationRoutes() {
         List<EvacuationRouteResponse> evacuationRoutes = evacuationRouteService.getAllEvacuationRoutes();
@@ -40,15 +33,25 @@ public class EvacuationRouteController {
         }
     }
 
+    @PostMapping
+    @UserService.RequiresRole({ UserService.Role.ADMIN })
+    public ResponseEntity<EvacuationRouteResponse> createEvacuationRoute(
+            @RequestBody EvacuationRouteRequest evacuationRouteRequest) {
+        EvacuationRouteResponse evacuationRouteResponse = evacuationRouteService
+                .createEvacuationRoute(evacuationRouteRequest);
+        return ResponseEntity.status(HttpStatus.CREATED).body(evacuationRouteResponse);
+    }
+
     @PutMapping("/{id}")
-    @UserService.RequiresRole({UserService.Role.ADMIN})
-    public ResponseEntity<Void> updateEvacuationRoute(@PathVariable Long id, @RequestBody EvacuationRouteRequest evacuationRouteRequest) {
+    @UserService.RequiresRole({ UserService.Role.ADMIN })
+    public ResponseEntity<Void> updateEvacuationRoute(@PathVariable Long id,
+            @RequestBody EvacuationRouteRequest evacuationRouteRequest) {
         evacuationRouteService.updateEvacuationRoute(id, evacuationRouteRequest);
         return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/{id}")
-    @UserService.RequiresRole({UserService.Role.ADMIN})
+    @UserService.RequiresRole({ UserService.Role.ADMIN })
     public ResponseEntity<Void> deleteEvacuationRoute(@PathVariable Long id) {
         evacuationRouteService.deleteEvacuationRoute(id);
         return ResponseEntity.noContent().build();

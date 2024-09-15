@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.util.List;
 
@@ -11,6 +12,7 @@ import java.util.List;
 @Setter
 @Entity
 @Table(name = "incidents")
+@EntityListeners(AuditingEntityListener.class)
 public class Incident {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "incident_seq")
@@ -24,5 +26,6 @@ public class Incident {
     private String longitude;
     private String description;
     @CreatedDate
+    @Column(updatable = false)
     private java.time.LocalDateTime createdAt;
 }
