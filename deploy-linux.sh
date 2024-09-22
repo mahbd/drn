@@ -63,9 +63,9 @@ then
 else
     echo "Java 21 found. Building microservices..."
 fi
-microservices=$(ls -d "$DIR/microservices/*/" 2>/dev/null)
+microservices=$(find "$DIR/microservices" -mindepth 1 -maxdepth 1 -type d 2>/dev/null)
 # check if there are any microservices
-if [ -z "$microservices" ]; then
+if [ -z "$DIR/microservices" ]; then
     echo "No microservices found. Exiting..."
     exit 1
 fi
