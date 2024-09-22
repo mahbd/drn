@@ -4,7 +4,7 @@ After=network.target
 
 [Service]
 User=#USER#
-WorkingDirectory=$DIR$
+WorkingDirectory=#DIR#
 ExecStart=#JAVA_PATH# -jar #JAR_PATH#
 
 [Install]
