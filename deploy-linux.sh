@@ -80,7 +80,7 @@ for microservice in $microservices; do
         continue
     fi
     echo "Deploying $microservice_name..."
-    cd microservice
+    cd $microservice
     mvn clean install
     # get microservice jar
     JAR_PATH=$(find "$microservice/target" -name "*.jar")
@@ -89,6 +89,7 @@ for microservice in $microservices; do
         echo "Creating $microservice_name service..."
         sudo cp "$microservice/$microservice_name.service" /etc/systemd/system/
         # replace $USER$ $JAVA_PATH$ and $JAR_PATH$ in $microservice_name.service
+        sudo sed -i "s|#DIR#|$microservice|g" /etc/systemd/system/"$microservice_name".service
         sudo sed -i "s|#USER#|$USER|g" /etc/systemd/system/"$microservice_name".service
         sudo sed -i "s|#JAVA_PATH#|$JAVA_PATH|g" /etc/systemd/system/"$microservice_name".service
         sudo sed -i "s|#JAR_PATH#|$JAR_PATH|g" /etc/systemd/system/"$microservice_name".service
