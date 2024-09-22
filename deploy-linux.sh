@@ -80,6 +80,7 @@ for microservice in $microservices; do
         continue
     fi
     echo "Deploying $microservice_name..."
+    cd microservice
     mvn clean install
     # get microservice jar
     JAR_PATH=$(find "$microservice/target" -name "*.jar")
