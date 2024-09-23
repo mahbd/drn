@@ -1,12 +1,12 @@
 export interface User {
   id: number;
+  name: string;
   email: string;
-  role: "CITIZEN" | "DONOR" | "VOLUNTEER" | "ADMIN";
+  role: "ADMIN" | "CITIZEN" | "DONOR" | "VOLUNTEER";
 }
 
 export interface RegisterBody extends User {
   password: string;
-  name: string;
   phone: string;
   address: string;
 }

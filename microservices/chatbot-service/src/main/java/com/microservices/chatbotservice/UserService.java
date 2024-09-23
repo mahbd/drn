@@ -22,9 +22,12 @@ import java.util.Map;
 @Aspect
 @Component
 public class UserService {
+    private static final ThreadLocal<UserResponse> currentUser = new ThreadLocal<>();
+
     @Around("@annotation(requiresRole)")
     public Object checkRole(ProceedingJoinPoint joinPoint, RequiresRole requiresRole) throws Throwable {
-        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes())
+                .getRequest();
         String authorizationHeader = request.getHeader("Authorization");
         if (authorizationHeader == null) {
             var response = Map.of("message", "Authorization header is missing");
@@ -42,7 +45,12 @@ public class UserService {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
         }
 
-        return joinPoint.proceed();
+        currentUser.set(user);
+        try {
+            return joinPoint.proceed();
+        } finally {
+            currentUser.remove();
+        }
     }
 
     public UserResponse getUser(String authHeaderString) {
@@ -77,7 +85,7 @@ public class UserService {
         Role[] value();
     }
 
-    public record UserResponse(Long id, String email, Role role) {
+    public record UserResponse(Long id, String name, String email, Role role) {
     }
 
     public enum Role {
@@ -85,5 +93,13 @@ public class UserService {
         CITIZEN,
         VOLUNTEER,
         DONOR
+    }
+
+    public static UserResponse getCurrentUser() {
+        return currentUser.get();
+    }
+
+    public static void clearCurrentUser() {
+        currentUser.remove();
     }
 }

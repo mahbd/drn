@@ -1,4 +1,6 @@
 export const APIEndpoint =
+  typeof window !== "undefined" &&
+  window.location &&
   window.location.host === "localhost:3000"
     ? "http://localhost:8000"
     : "https://drn.mahmudul.com.bd";
@@ -14,6 +16,7 @@ export const API = {
   chatbot: APIEndpoint + "/api/chatbot",
   incidents: APIEndpoint + "/api/incidents",
   shelters: APIEndpoint + "/api/shelters",
+  users: APIEndpoint + "/api/users",
 };
 
 export const ROUTING = {

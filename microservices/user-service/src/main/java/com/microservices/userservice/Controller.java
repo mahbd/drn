@@ -49,11 +49,12 @@ public class Controller {
                     .withIssuer("drn")
                     .withClaim("id", user.getId())
                     .withClaim("email", user.getEmail())
+                    .withClaim("name", user.getName())
                     .withClaim("role", user.getRole().toString())
                     .withIssuedAt(Date.from(now))
                     .withExpiresAt(Date.from(expiry))
                     .sign(algorithm);
-        } catch (JWTCreationException exception){
+        } catch (JWTCreationException exception) {
             throw new RuntimeException(exception);
         }
     }
@@ -87,14 +88,14 @@ public class Controller {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(body);
             }
             return ResponseEntity.ok(userResponse);
-        } catch (JWTVerificationException exception){
+        } catch (JWTVerificationException exception) {
             var body = Map.of("message", "Invalid token");
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(body);
         }
     }
 
     @GetMapping
-    public ResponseEntity<List<UserResponse>> userList(){
+    public ResponseEntity<List<UserResponse>> userList() {
         List<UserResponse> users = userService.userList();
         return ResponseEntity.ok(users);
     }

@@ -75,12 +75,12 @@ public class UserService {
         if (user == null) {
             return null;
         }
-        return new UserResponse(user.getId(), user.getEmail(), user.getRole());
+        return new UserResponse(user.getId(), user.getName(), user.getEmail(), user.getRole());
     }
 
-    public List <UserResponse> userList(){
+    public List<UserResponse> userList() {
         return userRepository.findAll().stream()
-                .map(user -> new UserResponse(user.getId(), user.getEmail(), user.getRole()))
+                .map(user -> new UserResponse(user.getId(), user.getName(), user.getEmail(), user.getRole()))
                 .collect(Collectors.toList());
     }
 }

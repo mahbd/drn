@@ -1,5 +1,6 @@
 package com.microservices.chatbotservice;
 
+import com.microservices.chatbotservice.UserService.UserResponse;
 import com.microservices.chatbotservice.dto.ChatQueryRequest;
 import com.microservices.chatbotservice.dto.ChatQueryResponse;
 import lombok.AllArgsConstructor;
@@ -16,15 +17,19 @@ public class ChatQueryController {
     private final ChatQueryService chatQueryService;
 
     @PostMapping
-    @UserService.RequiresRole({UserService.Role.CITIZEN, UserService.Role.ADMIN, UserService.Role.VOLUNTEER, UserService.Role.DONOR})
+    @UserService.RequiresRole({ UserService.Role.CITIZEN, UserService.Role.ADMIN, UserService.Role.VOLUNTEER,
+            UserService.Role.DONOR })
     public ResponseEntity<ChatQueryResponse> createChatQuery(@RequestBody ChatQueryRequest chatQueryRequest) {
         ChatQueryResponse chatQueryResponse = chatQueryService.createChatQuery(chatQueryRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(chatQueryResponse);
     }
 
     @GetMapping
+    @UserService.RequiresRole({ UserService.Role.CITIZEN, UserService.Role.ADMIN, UserService.Role.VOLUNTEER,
+            UserService.Role.DONOR })
     public ResponseEntity<List<ChatQueryResponse>> getAllChatQueries() {
-        List<ChatQueryResponse> chatQueries = chatQueryService.getAllChatQueries();
+        UserResponse currentUser = UserService.getCurrentUser();
+        List<ChatQueryResponse> chatQueries = chatQueryService.getAllChatQueries(currentUser.id());
         return ResponseEntity.ok(chatQueries);
     }
 

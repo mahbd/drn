@@ -1,6 +1,6 @@
 "use client";
 import useModels from "@/store/useModels";
-import { Chat } from "@/store/models";
+import { Chat, User } from "@/store/models";
 import { API, ROUTING } from "@/store/config";
 import { getCurrentUser } from "@/store/authService";
 import { useEffect, useState } from "react";
@@ -37,7 +37,7 @@ const ChatPage = () => {
     try {
       const res = await http.post<Chat>(API.chatbot, chat);
       if (res.status === 201) {
-        chats!.push(res.data);
+        chats?.push(res.data);
         setMessage("");
       }
     } catch (e) {
@@ -55,22 +55,23 @@ const ChatPage = () => {
         overflowY: "scroll",
       }}
     >
-      {chats!.map((chat) => (
-        <>
-          <ChatBubble
-            key={chat.id}
-            name={chat.userId.toString()}
-            message={chat.query}
-            isSender={true}
-          />
-          <ChatBubble
-            key={chat.id}
-            name={chat.userId.toString()}
-            message={chat.response}
-            isSender={false}
-          />
-        </>
-      ))}
+      {chats &&
+        chats.map((chat) => (
+          <>
+            <ChatBubble
+              key={chat.id}
+              name={user.name || chat.userId.toString()}
+              message={chat.query}
+              isSender={true}
+            />
+            <ChatBubble
+              key={chat.id}
+              name={"DiRi"}
+              message={chat.response}
+              isSender={false}
+            />
+          </>
+        ))}
       <div className={"flex flex-row gap-2 mt-4"}>
         <textarea
           value={message}
@@ -80,9 +81,10 @@ const ChatPage = () => {
         />
         <button
           className={"btn btn-lg btn-success mt-1"}
+          disabled={loading}
           onClick={() => sendMessage(message)}
         >
-          Send
+          Send {loading && <Spinner />}
         </button>
       </div>
     </div>
@@ -109,7 +111,9 @@ const ChatBubble = ({ name, message, isSender }: ChatBubbleProps) => {
           </div>
         </div>
       </div>
-      <div className="chat-header">{name}</div>
+      <div className="chat-header font-bold bg-green-600 px-10 py-1 rounded-lg">
+        {name}
+      </div>
       <div className="chat-bubble pt-0">{message}</div>
     </div>
   );
