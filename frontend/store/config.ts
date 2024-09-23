@@ -1,4 +1,7 @@
-export const APIEndpoint = "http://localhost:8000";
+export const APIEndpoint =
+  window.location.host === "localhost:3000"
+    ? "http://localhost:8000"
+    : "https://drn.mahmudul.com.bd";
 
 export const API = {
   register: APIEndpoint + "/api/users/register",
