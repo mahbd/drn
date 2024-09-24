@@ -6,6 +6,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.microservices.userservice.dto.LocationBody;
 import com.microservices.userservice.dto.LoginBody;
 import com.microservices.userservice.dto.RegisterBody;
 import com.microservices.userservice.dto.UserResponse;
@@ -66,6 +67,16 @@ public class Controller {
             return new ResponseEntity<>(Map.of("message", "Invalid credentials"), HttpStatus.UNAUTHORIZED);
         }
         return ResponseEntity.ok(Map.of("token", createJwtToken(user)));
+    }
+
+    @PostMapping("/update-location")
+    @UserServiceRemote.RequiresRole({ UserServiceRemote.Role.DONOR, UserServiceRemote.Role.CITIZEN,
+            UserServiceRemote.Role.ADMIN,
+            UserServiceRemote.Role.VOLUNTEER })
+    public ResponseEntity<Object> updateLocation(@RequestBody LocationBody locationBody) {
+        UserServiceRemote.UserResponse currentUser = UserServiceRemote.getCurrentUser();
+        userService.updateLocation(currentUser.id(), locationBody);
+        return ResponseEntity.ok(Map.of("message", "Location updated successfully"));
     }
 
     @PostMapping("/verify")

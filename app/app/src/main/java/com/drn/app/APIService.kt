@@ -24,10 +24,13 @@ data class AlertResponse(
 )
 
 interface APIService {
+    companion object {
+        const val BASE_URL = "https://drn.mahmudul.com.bd/"
+    }
     @POST("/api/users/login")
     fun login(@Body loginRequest: LoginRequest): Call<LoginResponse>
 
-    @POST("/api/users/locations")
+    @POST("/api/users/update-location")
     fun sendLocation(
         @Body locationRequest: LocationRequest,
         @Header("Authorization") authToken: String,

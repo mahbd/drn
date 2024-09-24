@@ -28,7 +28,7 @@ class LoginActivity : AppCompatActivity() {
             val password = passwordEditText.text.toString()
 
             val retrofit = Retrofit.Builder()
-                .baseUrl("https://lp8081.mahmudul.com.bd")
+                .baseUrl(APIService.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
             val service = retrofit.create(APIService::class.java)

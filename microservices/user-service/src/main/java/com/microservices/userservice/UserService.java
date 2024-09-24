@@ -1,5 +1,6 @@
 package com.microservices.userservice;
 
+import com.microservices.userservice.dto.LocationBody;
 import com.microservices.userservice.dto.LoginBody;
 import com.microservices.userservice.dto.RegisterBody;
 import com.microservices.userservice.dto.Role;
@@ -76,6 +77,16 @@ public class UserService {
             return null;
         }
         return new UserResponse(user.getId(), user.getName(), user.getEmail(), user.getRole());
+    }
+
+    public void updateLocation(Long id, LocationBody locationBody) {
+        User user = userRepository.findById(id).orElse(null);
+        if (user == null) {
+            return;
+        }
+        user.setGpsLat(locationBody.gpsLat());
+        user.setGpsLong(locationBody.gpsLong());
+        userRepository.save(user);
     }
 
     public List<UserResponse> userList() {

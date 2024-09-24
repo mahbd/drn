@@ -67,11 +67,10 @@ class LocationService : Service() {
     }
 
     private fun onLocationChanged(location: Location) {
-        Log.d("LocationService", "Location: ${location.latitude}, ${location.longitude}")
         val latitude = location.latitude
         val longitude = location.longitude
         val retrofit = Retrofit.Builder()
-            .baseUrl("https://lp8081.mahmudul.com.bd")
+            .baseUrl(APIService.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
         val sharedPreferences = getSharedPreferences("com.drn.app", MODE_PRIVATE)
@@ -85,29 +84,14 @@ class LocationService : Service() {
                         response: Response<LocationResponse>
                     ) {
                         if (response.isSuccessful) {
-                            Toast.makeText(
-                                this@LocationService,
-                                "Location sent successfully",
-                                Toast.LENGTH_SHORT
-                            ).show()
                             Log.d("LocationService", "Location sent successfully")
                         } else {
                             Log.e("LocationService", "Failed to send location")
-                            Toast.makeText(
-                                this@LocationService,
-                                "Failed to send location",
-                                Toast.LENGTH_SHORT
-                            ).show()
                         }
                     }
 
                     override fun onFailure(call: Call<LocationResponse>, t: Throwable) {
                         Log.e("LocationService", "Failed to send location", t)
-                        Toast.makeText(
-                            this@LocationService,
-                            "Something went wrong",
-                            Toast.LENGTH_SHORT
-                        ).show()
                     }
                 })
         }
