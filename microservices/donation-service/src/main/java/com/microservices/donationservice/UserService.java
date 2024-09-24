@@ -23,6 +23,7 @@ import java.util.Map;
 @Component
 public class UserService {
     private static final ThreadLocal<UserResponse> currentUser = new ThreadLocal<>();
+    private static Boolean debug = false;
 
     @Around("@annotation(requiresRole)")
     public Object checkRole(ProceedingJoinPoint joinPoint, RequiresRole requiresRole) throws Throwable {
@@ -30,6 +31,9 @@ public class UserService {
                 .getRequest();
         String authorizationHeader = request.getHeader("Authorization");
         if (authorizationHeader == null) {
+            if (debug) {
+                System.err.println("Authorization header is missing");
+            }
             var response = Map.of("message", "Authorization header is missing");
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
         }
@@ -62,6 +66,9 @@ public class UserService {
         try {
             ResponseEntity<Object> response = restTemplate.exchange(userURL, HttpMethod.POST, entity, Object.class);
             if (response.getStatusCode() != HttpStatus.OK) {
+                if (debug) {
+                    System.err.println("Status code: " + response.getStatusCode());
+                }
                 return null;
             }
             var body = response.getBody();
@@ -69,10 +76,16 @@ public class UserService {
             try {
                 return mapper.convertValue(body, UserResponse.class);
             } catch (Exception e) {
+                if (debug) {
+                    System.err.println("Error converting body to UserResponse: " + e.getMessage());
+                }
                 return null;
             }
         } catch (HttpClientErrorException e) {
             if (e.getStatusCode() == HttpStatus.UNAUTHORIZED) {
+                if (debug) {
+                    System.err.println("Unauthorized");
+                }
                 return null;
             }
             throw e;
@@ -85,7 +98,7 @@ public class UserService {
         Role[] value();
     }
 
-    public record UserResponse(Long id, String email, Role role) {
+    public record UserResponse(Long id, String name, String email, Role role) {
     }
 
     public enum Role {

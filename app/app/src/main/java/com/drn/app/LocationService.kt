@@ -77,7 +77,7 @@ class LocationService : Service() {
         val token = sharedPreferences.getString("token", null)
         if (token != null) {
             val service = retrofit.create(APIService::class.java)
-            service.sendLocation(LocationRequest(latitude, longitude), "Bearer $token")
+            service.sendLocation(LocationRequest(latitude.toString(), longitude.toString()), "Bearer $token")
                 .enqueue(object : Callback<LocationResponse> {
                     override fun onResponse(
                         call: Call<LocationResponse>,
@@ -86,12 +86,12 @@ class LocationService : Service() {
                         if (response.isSuccessful) {
                             Log.d("LocationService", "Location sent successfully")
                         } else {
-                            Log.e("LocationService", "Failed to send location")
+                            Log.e("LocationService", "Failed to send location: Code: ${response.code()}")
                         }
                     }
 
                     override fun onFailure(call: Call<LocationResponse>, t: Throwable) {
-                        Log.e("LocationService", "Failed to send location", t)
+                        Log.e("LocationService", "Failed to send location: ${t.message}")
                     }
                 })
         }

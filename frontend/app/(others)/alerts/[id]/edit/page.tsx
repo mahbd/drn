@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import AlertForm from "@/app/alerts/[id]/edit/AlertForm";
+import AlertForm from "@/app/(others)/alerts/[id]/edit/AlertForm";
 import Spinner from "@/components/Spinner";
 import useModel from "@/store/useModel";
 import { Alert } from "@/store/models";

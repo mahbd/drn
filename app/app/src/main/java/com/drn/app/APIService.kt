@@ -10,7 +10,7 @@ import java.time.LocalDateTime
 
 data class LoginRequest(val email: String, val password: String)
 data class LoginResponse(val token: String)
-data class LocationRequest(val latitude: Double, val longitude: Double)
+data class LocationRequest(val gpsLat: String, val gpsLong: String)
 data class LocationResponse(val message: String)
 
 data class AlertResponse(
@@ -25,7 +25,7 @@ data class AlertResponse(
 
 interface APIService {
     companion object {
-        const val BASE_URL = "https://drn.mahmudul.com.bd/"
+        const val BASE_URL = "https://drn.mahmudul.com.bd"
     }
     @POST("/api/users/login")
     fun login(@Body loginRequest: LoginRequest): Call<LoginResponse>

@@ -1,6 +1,6 @@
 "use client";
 
-import IncidentForm from "@/app/incidents/[id]/IncidentForm";
+import IncidentForm from "@/app/(others)/incidents/[id]/IncidentForm";
 import useModel from "@/store/useModel";
 import { API } from "@/store/config";
 import { Incident } from "@/store/models";
