@@ -43,4 +43,5 @@ export const ROUTING = {
   shelters: "/shelters",
   incidents: "/incidents",
   newIncident: "/incidents/new",
+  translate: "/translate",
 };
