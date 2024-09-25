@@ -1,7 +1,3 @@
-It seems I'm unable to access the provided URLs. However, I can still help you write a README file based on the information you've shared about the Disaster Response Network (DRN) project. Below is a template you can use or modify as needed.
-
----
-
 # Disaster Response Network (DRN)
 
 A comprehensive platform for disaster preparedness, response, and recovery in Bangladesh.
