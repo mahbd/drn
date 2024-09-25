@@ -15,7 +15,7 @@ interface Props {
 const IncidentPage = ({ params }: Props) => {
   const { data: incident, isLoading } = useModel<Incident>(
     API.incidents,
-    params.id,
+    params.id
   );
   if (isLoading && params.id !== "new") {
     return <Spinner />;

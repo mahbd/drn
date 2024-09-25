@@ -23,7 +23,6 @@ const TranslationComponent = ({ apiKey }: Props) => {
       setIsLoading(false);
       return;
     }
-    console.log("Translating key:", apiKey);
 
     try {
       const response = await axios.post(
